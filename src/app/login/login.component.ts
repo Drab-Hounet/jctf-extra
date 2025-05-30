@@ -12,6 +12,7 @@ import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 import {StateApiModel} from '../models/stateApiModel';
 import {AuthModel} from '../models/authModel';
+import {delay} from 'q';
 
 @Component({
   selector: 'app-login',
@@ -58,9 +59,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         }),
         tap(data => {
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
-            // this.setToken(data.response);
+            this.setToken(data.response);
             this.displayMessage('Identification réussie', 'Bienvenue ' + data.response[0].pseudo, 'success');
-            // this.redirectToBoard();
+            this.redirectToBoard().then(_ => {
+            });
           } else {
             this.displayMessage('Identification erronée', 'Erreur', 'error');
           }
@@ -76,17 +78,23 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   submitForm() {
     const adminLogin: AdminLoginModel = {
-      pseudo : this._loginForm.get('username')?.value,
-      password :this._loginForm.get('password')?.value
+      pseudo: this._loginForm.get('username')?.value,
+      password: this._loginForm.get('password')?.value
     };
     this._login$.next(adminLogin);
+  }
+
+  async redirectToBoard() {
+    await delay(1000);
+    this.router.navigate(['inscription']).then(_ => {
+    });
   }
 
   setToken(dataResponse: AuthModel[]) {
     // Il ne peut y avoir qu'une seule authentification
     const pseudo: string = dataResponse[0].pseudo;
     const token: string = dataResponse[0].token;
-    localStorage.setItem('currentJCTF', JSON.stringify({ auth: token, username: pseudo }));
+    localStorage.setItem('currentJCTF', JSON.stringify({auth: token, username: pseudo}));
   }
 
   displayMessage(message: string, summary: string, type: string) {
