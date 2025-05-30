@@ -1,0 +1,27 @@
+<div class="relative h-screen">
+  <div class="absolute top-0 left-0 w-full h-full background-image"></div>
+
+  <div class="flex justify-content-center align-items-center h-screen  z-1 relative">
+    <p-card class="w-full sm:w-30rem shadow-4" header="Connexion" subheader="Accédez à votre espace sécurisé">
+      <form (ngSubmit)="login()" class="flex flex-column gap-3 p-3">
+        <div>
+          <label for="username" class="block mb-2 font-medium">Pseudo</label>
+          <input id="username"
+                 class="border-blue-400 focus:border-blue-600"
+                 type="text" pInputText
+                 [(ngModel)]="username" name="username" required/>
+        </div>
+        <div>
+          <label for="password" class="block mb-2 font-medium">Mot de passe</label>
+          <input id="password"
+                 class="border-blue-400 focus:border-blue-600"
+                 type="password" pPassword
+                 [feedback]="false"
+                 [(ngModel)]="password" name="password" toggleMask required/>
+        </div>
+        <p-button label="Se connecter"
+                  styleClass="border-transparent mt-2 w-full bg-blue-900 text-white font-bold border-round hover:bg-blue-700"></p-button>
+      </form>
+    </p-card>
+  </div>
+</div>
