@@ -16,7 +16,7 @@ export class TokenUtilityClass {
    * retrieve the token from the local storage and store it in the class
    */
   getInformationToken() {
-    const storage = localStorage.getItem('currentUser');
+    const storage = localStorage.getItem('currentJCTF');
     if (storage) {
       const token: TokenModel = JSON.parse(storage);
       if (token) {

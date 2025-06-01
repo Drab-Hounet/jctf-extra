@@ -13,6 +13,7 @@ import {ToastModule} from 'primeng/toast';
 import {StateApiModel} from '../models/stateApiModel';
 import {AuthModel} from '../models/authModel';
 import {delay} from 'q';
+import {UserModel} from '../models/userModel';
 
 @Component({
   selector: 'app-login',
@@ -60,7 +61,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         tap(data => {
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
             this.setToken(data.response);
-            this.displayMessage('Identification réussie', 'Bienvenue ' + data.response[0].pseudo, 'success');
+            console.log(data.response)
+            this.displayMessage('Identification réussie', 'Bienvenue ' + data.response[0].surname, 'success');
             this.redirectToBoard().then(_ => {
             });
           } else {
@@ -71,14 +73,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   createForm() {
     this._loginForm = this.fb.group({
-      username: [''],
+      mail: [''],
       password: ['']
     });
   }
 
   submitForm() {
     const adminLogin: AdminLoginModel = {
-      pseudo: this._loginForm.get('username')?.value,
+      mail: this._loginForm.get('mail')?.value,
       password: this._loginForm.get('password')?.value
     };
     this._login$.next(adminLogin);
@@ -90,9 +92,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  setToken(dataResponse: AuthModel[]) {
-    // Il ne peut y avoir qu'une seule authentification
-    const pseudo: string = dataResponse[0].pseudo;
+  setToken(dataResponse: UserModel[] ) {
+    const pseudo: string = `${dataResponse[0].surname}`;
     const token: string = dataResponse[0].token;
     localStorage.setItem('currentJCTF', JSON.stringify({auth: token, username: pseudo}));
   }

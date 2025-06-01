@@ -5,12 +5,12 @@
     <p-card class="w-full sm:w-30rem shadow-4" header="Connexion" subheader="Accédez à votre espace sécurisé">
       <form [formGroup]="_loginForm" class="flex flex-column gap-3 p-3">
         <div>
-          <label for="username" class="block mb-2 font-medium">Pseudo</label>
-          <input id="username"
-                 formControlName="username"
+          <label for="mail" class="block mb-2 font-medium">Mail</label>
+          <input id="mail"
+                 formControlName="mail"
                  class="border-blue-400 focus:border-blue-600"
                  type="text" pInputText
-                name="username" required/>
+                name="mail" required/>
         </div>
         <div>
           <label for="password" class="block mb-2 font-medium">Mot de passe</label>

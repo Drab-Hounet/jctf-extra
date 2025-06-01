@@ -24,5 +24,4 @@ export class HeaderComponent {
     localStorage.removeItem('currentJCTF');
     this.navigateTo('login');
   }
-
 }

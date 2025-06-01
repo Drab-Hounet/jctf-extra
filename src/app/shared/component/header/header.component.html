@@ -1,20 +1,21 @@
 <div class="w-full bg-blue-50 border-900 shadow-1	 ">
   <div class="grid">
-    <div class="col-2">
+    <div class="col-1">
       <p-button
         icon="pi pi-fw pi-wallet"
         styleClass="w-full bg-white border-900 text-color
         hover:bg-white hover:border-400	 hover:text-color "
-        label="Adhésions"
-        (click)="navigateTo('adhesion')"
+        label="Profils"
+        (click)="navigateTo('profils')"
       ></p-button>
     </div>
 
-    <div class="col-1 col-offset-9">
+    <div class="col-1 col-offset-10">
       <p-button
         icon="pi pi-fw pi-power-off"
         styleClass="w-full bg-white border-900 text-color
         hover:bg-white hover:border-400	 hover:text-color "
+
         label="{{ iPseudo }}"
         (click)="logout()"
       ></p-button>

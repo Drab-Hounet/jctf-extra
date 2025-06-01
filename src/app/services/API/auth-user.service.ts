@@ -1,10 +1,10 @@
-import {Inject, inject, Injectable, Optional} from '@angular/core';
+import {Inject, Injectable, Optional} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../../environmnent/environment';
 import {Configuration} from '../configuration';
 import {BASE_PATH} from '../variables';
-import {ResponseAuthApiModel} from '../../models/ResponseApiAuth';
+import {ResponseUserApiModel} from '../../models/ResponseApiUser';
 import {AdminLoginModel} from '../../models/adminLoginModel';
 
 @Injectable({
@@ -47,9 +47,9 @@ export class AuthUserService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'body', reportProgress?: boolean): Observable<ResponseAuthApiModel>;
-  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseAuthApiModel>>;
-  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseAuthApiModel>>;
+  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'body', reportProgress?: boolean): Observable<ResponseUserApiModel>;
+  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseUserApiModel>>;
+  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseUserApiModel>>;
   public createAuthUser(adminLogin: AdminLoginModel, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (adminLogin === null || adminLogin === undefined) {
@@ -76,7 +76,7 @@ export class AuthUserService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.post<ResponseAuthApiModel>(`${this.basePath}/api/user/auth`,
+    return this.httpClient.post<ResponseUserApiModel>(`${this.basePath}/api/user/auth`,
       adminLogin,
       {
         withCredentials: this.configuration.withCredentials,

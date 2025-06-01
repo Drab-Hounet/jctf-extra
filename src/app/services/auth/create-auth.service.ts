@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthUserService} from '../API/auth-user.service';
 import {catchError, Observable, of, switchMap} from 'rxjs';
 import {AdminLoginModel} from '../../models/adminLoginModel';
-import {ResponseAuthApiModel} from '../../models/ResponseApiAuth';
-import {LoginModel} from '../../models/loginModel';
+import { ResponseUserApiModel} from '../../models/ResponseApiUser';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +12,9 @@ export class CreateAuthService {
   constructor(private authService: AuthUserService) {
   }
 
-  createAuthentification(adminLogin: AdminLoginModel): Observable<ResponseAuthApiModel | null> {
+  createAuthentification(adminLogin: AdminLoginModel): Observable<ResponseUserApiModel | null> {
     const pass = this.makeRequestLogin(adminLogin);
     adminLogin.password = pass;
-    console.log(adminLogin);
     return this.authService.createAuthUser(adminLogin).pipe(
       switchMap(data => {
         return of(data);
@@ -29,8 +27,6 @@ export class CreateAuthService {
   }
 
   makeRequestLogin(login: AdminLoginModel): string {
-    console.log(login.pseudo + ':' + login.password);
-
-    return window.btoa(login.pseudo + ':' + window.btoa(login.password));
+    return window.btoa(login.mail + ':' + window.btoa(login.password));
   }
 }
