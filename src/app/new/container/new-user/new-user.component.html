@@ -1,0 +1,83 @@
+<div class="relative h-screen">
+  <div class="absolute top-0 left-0 w-full h-full background-image"></div>
+  <div class="flex justify-content-center align-items-center h-screen  z-1 relative">
+    <p-card class="w-full sm:w-30rem shadow-4" header="Inscription" subheader="Création de votre compte">
+      <form [formGroup]="_newForm" class="flex flex-column gap-3 p-3">
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <label for="name" class="block mb-2 font-medium text-xs">Nom</label>
+            <input id="name"
+                   formControlName="name"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="text" pInputText
+                   name="name" required/>
+          </div>
+          <div class="col-12 md:col-6">
+            <label for="surname" class="block mb-2 font-medium text-xs">Prénom</label>
+            <input id="surname"
+                   formControlName="surname"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="text" pInputText
+                   name="surname" required/>
+          </div>
+          <div class="col-12 md:col-6">
+            <label for="mail" class="block mb-2 font-medium text-xs">Mail</label>
+            <input id="mail"
+                   formControlName="mail"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="text" pInputText
+                   name="mail" required/>
+          </div>
+          <div class="col-12 md:col-6">
+            <label for="phone" class="block mb-2 font-medium text-xs">Téléphone</label>
+            <input id="phone"
+                   formControlName="phone"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="text" pInputText
+                   name="phone" required/>
+          </div>
+          <div class="col-12 md:col-6">
+            <label for="password" class="text-xs block mb-2 font-medium">Mot de passe</label>
+            <input id="password"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="password" pPassword
+                   [feedback]="false"
+                   formControlName="password"
+                   name="password" toggleMask required/>
+          </div>
+          <div class="col-12 md:col-6">
+            <label for="repeat-password" class="text-xs block mb-2 font-medium">Confirmation mot de passe</label>
+            <input id="repeat-password"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="password" pPassword
+                   [feedback]="false"
+                   formControlName="repeatPassword"
+                   name="repeat-password" toggleMask required/>
+          </div>
+          <div *ngIf="_isErrorForm" class="col-12">
+            <span class="text-xs text-red-700">{{ _messageError }}</span>
+          </div>
+          <div class="col-12 mt-2">
+            <div class="grid">
+              <div class="col-12 md:col-6 ">
+                <p-button
+                          styleClass="border-transparent mt-2 w-full bg-blue-900 border-round hover:bg-blue-800"
+                          (click)="submitForm()">
+                  <span class="text-xs text-white font-bold">Création du compte</span>
+                </p-button>
+              </div>
+              <div class="col-12 md:col-6">
+                <p-button
+                  styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
+                  (click)="onCancel()">
+                  <span class="text-xs text-blue-900 font-bold">Annuler</span>
+                </p-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>
+<p-toast></p-toast>
