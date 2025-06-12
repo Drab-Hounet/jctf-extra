@@ -11,7 +11,6 @@ import {CreateAuthService} from '../services/auth/create-auth.service';
 import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 import {StateApiModel} from '../models/stateApiModel';
-import {AuthModel} from '../models/authModel';
 import {delay} from 'q';
 import {UserModel} from '../models/userModel';
 
@@ -44,12 +43,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isLogged();
     this.serviceSubscribe();
     this.createForm();
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
+  }
+
+  isLogged() {
+    const storage = localStorage.getItem('currentJCTF');
+    if (storage) {
+      this.router.navigate(['inscription']);
+    }
   }
 
   serviceSubscribe() {
@@ -86,15 +93,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._login$.next(adminLogin);
   }
 
+  newUserForm() {
+    this.router.navigate(['new']);
+  }
+
   async redirectToBoard() {
     await delay(1000);
     this.router.navigate(['inscription']).then(_ => {
     });
   }
 
-  setToken(dataResponse: UserModel[] ) {
+  setToken(dataResponse: UserModel[]) {
     const pseudo: string = `${dataResponse[0].surname}`;
-    const token: string = dataResponse[0].token;
+    const token: string | null = dataResponse[0].token;
     localStorage.setItem('currentJCTF', JSON.stringify({auth: token, username: pseudo}));
   }
 

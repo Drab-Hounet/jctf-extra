@@ -4,26 +4,43 @@
   <div class="flex justify-content-center align-items-center h-screen  z-1 relative">
     <p-card class="w-full sm:w-30rem shadow-4" header="Connexion" subheader="Accédez à votre espace sécurisé">
       <form [formGroup]="_loginForm" class="flex flex-column gap-3 p-3">
-        <div>
-          <label for="mail" class="block mb-2 font-medium">Mail</label>
-          <input id="mail"
-                 formControlName="mail"
-                 class="border-blue-400 focus:border-blue-600"
-                 type="text" pInputText
-                name="mail" required/>
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <label for="mail" class="block mb-2 font-medium text-xs">Mail</label>
+            <input id="mail"
+                   formControlName="mail"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="text" pInputText
+                   name="mail" required/>
+          </div>
+          <div class="col-12 md:col-6">
+            <label for="password" class="text-xs block mb-2 font-medium">Mot de passe</label>
+            <input id="password"
+                   class="w-full text-xs border-blue-400 focus:border-blue-600"
+                   type="password" pPassword
+                   [feedback]="false"
+                   formControlName="password"
+                   name="password" toggleMask required/>
+          </div>
+          <div class="col-12 mt-2">
+            <div class="grid">
+              <div class="col-6">
+                <p-button
+                  styleClass="border-transparent mt-2 w-full bg-blue-900 border-round hover:bg-blue-800"
+                  (click)="submitForm()">
+                  <span class="text-xs text-white font-bold">Se connecter</span>
+                </p-button>
+              </div>
+              <div class="col-6">
+                <p-button
+                  styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
+                  (click)="newUserForm()">
+                  <span class="text-xs text-blue-900 font-bold">S'inscrire</span>
+                </p-button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <label for="password" class="block mb-2 font-medium">Mot de passe</label>
-          <input id="password"
-                 class="border-blue-400 focus:border-blue-600"
-                 type="password" pPassword
-                 [feedback]="false"
-                 formControlName="password"
-                 name="password" toggleMask required/>
-        </div>
-        <p-button label="Se connecter"
-                  styleClass="border-transparent mt-2 w-full bg-blue-900 text-white font-bold border-round hover:bg-blue-700"
-                  (click)="submitForm()"></p-button>
       </form>
     </p-card>
   </div>

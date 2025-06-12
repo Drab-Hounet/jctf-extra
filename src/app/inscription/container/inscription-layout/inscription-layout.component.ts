@@ -12,16 +12,24 @@ import {Router} from '@angular/router';
 })
 export class InscriptionLayoutComponent implements OnInit {
   private tokenUtilityClass!: TokenUtilityClass;
-  _token!:string;
-  _pseudo!:string;
+  _token!: string;
+  _pseudo!: string;
 
   constructor(private router: Router) {
   }
-ngOnInit(): void {
+
+  ngOnInit(): void {
     this.tokenUtilityClass = new TokenUtilityClass(this.router);
     this.getInformationToken();
+    this.isLogged()
   }
 
+  isLogged() {
+    const storage = localStorage.getItem('currentJCTF');
+    if (!storage) {
+      this.router.navigate(['login']);
+    }
+  }
 
   getInformationToken(): void {
     this.tokenUtilityClass.getInformationToken();

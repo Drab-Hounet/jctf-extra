@@ -6,6 +6,7 @@ import {Configuration} from '../configuration';
 import {BASE_PATH} from '../variables';
 import {ResponseUserApiModel} from '../../models/ResponseApiUser';
 import {AdminLoginModel} from '../../models/adminLoginModel';
+import {UserModel} from '../../models/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +42,7 @@ export class AuthUserService {
 
 
   /**
-   * Authentification d'un utilisateur
-   *
+   * Authentification user
    * @param adminLogin AdminLoginModel
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
@@ -78,6 +78,53 @@ export class AuthUserService {
 
     return this.httpClient.post<ResponseUserApiModel>(`${this.basePath}/api/user/auth`,
       adminLogin,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+
+  /**
+   * Create new user
+   * @param newUser UserModel
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public createUser(newUser: UserModel, observe?: 'body', reportProgress?: boolean): Observable<ResponseUserApiModel>;
+  public createUser(newUser: UserModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseUserApiModel>>;
+  public createUser(newUser: UserModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseUserApiModel>>;
+  public createUser(newUser: UserModel, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    if (newUser === null || newUser === undefined) {
+      throw new Error('Required parameter AdminLoginModel was null or undefined when calling authUserUsingPOST.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<ResponseUserApiModel>(`${this.basePath}/api/user`,
+      newUser,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
