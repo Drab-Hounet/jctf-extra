@@ -7,11 +7,9 @@ import {ButtonModule} from 'primeng/button';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {NgIf} from '@angular/common';
-import {CreateUserService} from '../../../services/auth/create-user.service';
 import {Router} from '@angular/router';
 import {Subject, Subscription, switchMap, tap} from 'rxjs';
 import {RecoveryPasswordMailService} from '../../../services/auth/recovery-password-mail.service';
-import {UserModel} from '../../../models/userModel';
 import {StateApiModel} from '../../../models/stateApiModel';
 
 @Component({
@@ -73,17 +71,6 @@ export class ForgotPasswordLayoutComponent implements OnInit, OnDestroy {
             } else {
               this.displayMessage('Une erreur est survenue','Erreur' , 'error');
             }
-            //     this.displayMessage('Création réussie', 'Le compte a bien été crée' , 'success');
-            //     this.redirectToBoard().then(_ => {
-            //     });
-            //   } else if (data.stateApi?.status === StateApiModel.StatusEnum.Error) {
-            //     const message = data.stateApi.log ?? 'Erreur';
-            //     this.displayMessage(message, 'Création impossible', 'error');
-            //   } else {
-            //     this.displayMessage('Création impossible', 'Erreur', 'error');
-            //   }
-            // } else {
-            //   this.displayMessage('Création impossible', 'Erreur', 'error');
           }
         })).subscribe());
   }
