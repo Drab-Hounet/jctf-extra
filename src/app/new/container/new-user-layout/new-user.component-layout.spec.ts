@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewUserComponent } from './new-user.component';
+import { NewUserLayoutComponent } from './new-user.component-layout';
 
 describe('NewUserComponent', () => {
-  let component: NewUserComponent;
-  let fixture: ComponentFixture<NewUserComponent>;
+  let component: NewUserLayoutComponent;
+  let fixture: ComponentFixture<NewUserLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewUserComponent]
+      imports: [NewUserLayoutComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NewUserComponent);
+    fixture = TestBed.createComponent(NewUserLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

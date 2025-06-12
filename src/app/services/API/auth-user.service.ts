@@ -53,7 +53,7 @@ export class AuthUserService {
   public createAuthUser(adminLogin: AdminLoginModel, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (adminLogin === null || adminLogin === undefined) {
-      throw new Error('Required parameter AdminLoginModel was null or undefined when calling authUserUsingPOST.');
+      throw new Error('Required parameter adminLogin was null or undefined when calling createAuthUser.');
     }
 
     let headers = this.defaultHeaders;
@@ -100,7 +100,7 @@ export class AuthUserService {
   public createUser(newUser: UserModel, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (newUser === null || newUser === undefined) {
-      throw new Error('Required parameter AdminLoginModel was null or undefined when calling authUserUsingPOST.');
+      throw new Error('Required parameter newUser was null or undefined when calling createUser.');
     }
 
     let headers = this.defaultHeaders;
@@ -125,6 +125,53 @@ export class AuthUserService {
 
     return this.httpClient.post<ResponseUserApiModel>(`${this.basePath}/api/user`,
       newUser,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+
+  /**
+   * ask recovery Password (mail)
+   * @param mail string
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public recoveryPassword(mail: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseUserApiModel>;
+  public recoveryPassword(mail: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseUserApiModel>>;
+  public recoveryPassword(mail: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseUserApiModel>>;
+  public recoveryPassword(mail: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    if (mail === null || mail === undefined) {
+      throw new Error('Required parameter mail was null or undefined when calling recoveryPassword.');
+    }
+
+    let headers = this.defaultHeaders;
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.post<ResponseUserApiModel>(`${this.basePath}/api/pass/recovery`,
+      mail,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

@@ -21,7 +21,7 @@ export class InscriptionLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.tokenUtilityClass = new TokenUtilityClass(this.router);
     this.getInformationToken();
-    this.isLogged()
+    // this.isLogged()
   }
 
   isLogged() {

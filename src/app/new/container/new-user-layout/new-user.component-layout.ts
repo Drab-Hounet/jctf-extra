@@ -10,13 +10,12 @@ import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {NgIf} from '@angular/common';
 import {CreateUserService} from '../../../services/auth/create-user.service';
-import {AdminLoginModel} from '../../../models/adminLoginModel';
 import {UserModel} from '../../../models/userModel';
 import {StateApiModel} from '../../../models/stateApiModel';
 import {delay} from 'q';
 
 @Component({
-  selector: 'app-new-user',
+  selector: 'app-new-user-layout',
   standalone: true,
   imports: [
     FormsModule,
@@ -28,11 +27,11 @@ import {delay} from 'q';
     ReactiveFormsModule,
     NgIf,
   ],
-  templateUrl: './new-user.component.html',
-  styleUrl: './new-user.component.scss',
+  templateUrl: './new-user.component-layout.html',
+  styleUrl: './new-user.component-layout.scss',
   providers: [MessageService]
 })
-export class NewUserComponent implements OnInit, OnDestroy {
+export class NewUserLayoutComponent implements OnInit, OnDestroy {
   _newForm!: FormGroup;
   _isErrorForm: boolean = false;
   _messageError!: string;
@@ -92,7 +91,7 @@ export class NewUserComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitForm() {
+  onSubmitForm() {
     if (this._newForm.get('password')?.value !== this._newForm.get('repeatPassword')?.value) {
       this.displayMessageFormError('Attention, les mots de passe ne correspondent pas.');
     } else if (!this._newForm.get('phone')?.valid) {

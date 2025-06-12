@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitForm() {
+  onSubmitForm() {
     const adminLogin: AdminLoginModel = {
       mail: this._loginForm.get('mail')?.value,
       password: this._loginForm.get('password')?.value
@@ -93,8 +93,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._login$.next(adminLogin);
   }
 
-  newUserForm() {
+  onNewUserForm() {
     this.router.navigate(['new']);
+  }
+
+  onForgotPassword() {
+    this.router.navigate(['forgotPassword']);
   }
 
   async redirectToBoard() {

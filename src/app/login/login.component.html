@@ -27,15 +27,26 @@
               <div class="col-6">
                 <p-button
                   styleClass="border-transparent mt-2 w-full bg-blue-900 border-round hover:bg-blue-800"
-                  (click)="submitForm()">
+                  (click)="onSubmitForm()">
                   <span class="text-xs text-white font-bold">Se connecter</span>
                 </p-button>
               </div>
               <div class="col-6">
                 <p-button
                   styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
-                  (click)="newUserForm()">
+                  (click)="onNewUserForm()">
                   <span class="text-xs text-blue-900 font-bold">S'inscrire</span>
+                </p-button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="grid">
+              <div class="col-12">
+                <p-button
+                  styleClass="border-transparent w-full bg-white border-blue-900 border-round hover:surface-ground	"
+                  (click)="onForgotPassword()">
+                  <span class="text-xs text-blue-900 font-bold">Mot de passe oublié ?</span>
                 </p-button>
               </div>
             </div>
