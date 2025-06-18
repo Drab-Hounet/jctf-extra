@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 import {Subject, Subscription, switchMap, tap} from 'rxjs';
 import {RecoveryPasswordMailService} from '../../../services/auth/recovery-password-mail.service';
 import {StateApiModel} from '../../../models/stateApiModel';
+import {SpinnerComponent} from '../../../shared/component/spinner/spinner.component';
 
 @Component({
   selector: 'app-forgot-password-layout',
@@ -21,6 +22,7 @@ import {StateApiModel} from '../../../models/stateApiModel';
     ButtonModule,
     ToastModule,
     ReactiveFormsModule,
+    SpinnerComponent,
     NgIf],
   standalone: true,
   providers: [MessageService],
@@ -32,6 +34,7 @@ export class ForgotPasswordLayoutComponent implements OnInit, OnDestroy {
   _isErrorForm: boolean = false;
   _messageError!: string;
 
+  _spinner: boolean = false;
   private _subscription: Subscription = new Subscription();
   private _recoveryPasswordMail$: Subject<string> = new Subject();
 
@@ -60,8 +63,8 @@ export class ForgotPasswordLayoutComponent implements OnInit, OnDestroy {
           return this.recoveryPasswordMailService.recoveryPasswordMail(mail);
         }),
         tap(data => {
+          this._spinner = false;
           if (data) {
-            console.log(data);
             if (data.stateApi?.status === StateApiModel.StatusEnum.Success) {
               if(data.stateApi.log) {
                 this.displayMessage(data.stateApi.log,'Erreur' , 'error');
@@ -92,6 +95,7 @@ export class ForgotPasswordLayoutComponent implements OnInit, OnDestroy {
     } else if (!this._forgotPasswordForm.get('mail')?.valid) {
       this.displayMessageFormError('Attention, l\'adresse mail est invalide.');
     } else {
+      this._spinner = true;
       this._messageError = '';
       this._recoveryPasswordMail$.next(this._forgotPasswordForm.get('mail')?.value);
     }

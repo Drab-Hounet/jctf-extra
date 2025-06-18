@@ -13,6 +13,7 @@ import {ToastModule} from 'primeng/toast';
 import {StateApiModel} from '../models/stateApiModel';
 import {delay} from 'q';
 import {UserModel} from '../models/userModel';
+import {SpinnerComponent} from '../shared/component/spinner/spinner.component';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ import {UserModel} from '../models/userModel';
     ButtonModule,
     ToastModule,
     ReactiveFormsModule,
+    SpinnerComponent,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -32,6 +34,7 @@ import {UserModel} from '../models/userModel';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   _loginForm!: FormGroup;
+  _spinner: boolean = false;
 
   private _subscription: Subscription = new Subscription();
   private _login$: Subject<AdminLoginModel> = new Subject();
@@ -66,6 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           return this.createAuthService.createAuthentification(login);
         }),
         tap(data => {
+          this._spinner = false;
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
             this.setToken(data.response);
             console.log(data.response)
@@ -86,6 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmitForm() {
+    this._spinner = true;
     const adminLogin: AdminLoginModel = {
       mail: this._loginForm.get('mail')?.value,
       password: this._loginForm.get('password')?.value

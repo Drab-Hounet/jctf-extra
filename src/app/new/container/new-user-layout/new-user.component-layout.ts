@@ -13,6 +13,7 @@ import {CreateUserService} from '../../../services/auth/create-user.service';
 import {UserModel} from '../../../models/userModel';
 import {StateApiModel} from '../../../models/stateApiModel';
 import {delay} from 'q';
+import {SpinnerComponent} from '../../../shared/component/spinner/spinner.component';
 
 @Component({
   selector: 'app-new-user-layout',
@@ -26,6 +27,7 @@ import {delay} from 'q';
     ToastModule,
     ReactiveFormsModule,
     NgIf,
+    SpinnerComponent,
   ],
   templateUrl: './new-user.component-layout.html',
   styleUrl: './new-user.component-layout.scss',
@@ -35,6 +37,7 @@ export class NewUserLayoutComponent implements OnInit, OnDestroy {
   _newForm!: FormGroup;
   _isErrorForm: boolean = false;
   _messageError!: string;
+  _spinner = false;
 
   private _subscription: Subscription = new Subscription();
   private _userToCreate$: Subject<UserModel> = new Subject();
@@ -63,6 +66,7 @@ export class NewUserLayoutComponent implements OnInit, OnDestroy {
           return this.createUserService.createUser(user);
         }),
         tap(data => {
+          this._spinner = false;
           if (data) {
             if (data.stateApi?.status === StateApiModel.StatusEnum.Success) {
               this.displayMessage('Création réussie', 'Le compte a bien été crée' , 'success');
@@ -103,7 +107,7 @@ export class NewUserLayoutComponent implements OnInit, OnDestroy {
     } else {
       this._isErrorForm = false;
       this._messageError = '';
-
+      this._spinner =true;
       this._userToCreate$.next({
         name: this._newForm.get('name')?.value,
         surname: this._newForm.get('surname')?.value,
