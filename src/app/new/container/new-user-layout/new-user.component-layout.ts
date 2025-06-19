@@ -69,7 +69,7 @@ export class NewUserLayoutComponent implements OnInit, OnDestroy {
           this._spinner = false;
           if (data) {
             if (data.stateApi?.status === StateApiModel.StatusEnum.Success) {
-              this.displayMessage('Création réussie', 'Le compte a bien été crée' , 'success');
+              this.displayMessage('Création réussie', 'Le compte a bien été crée', 'success');
               this.redirectToBoard().then(_ => {
               });
             } else if (data.stateApi?.status === StateApiModel.StatusEnum.Error) {
@@ -107,7 +107,7 @@ export class NewUserLayoutComponent implements OnInit, OnDestroy {
     } else {
       this._isErrorForm = false;
       this._messageError = '';
-      this._spinner =true;
+      this._spinner = true;
       this._userToCreate$.next({
         name: this._newForm.get('name')?.value,
         surname: this._newForm.get('surname')?.value,
@@ -131,13 +131,15 @@ export class NewUserLayoutComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['login']);
+    this.router.navigate(['login']).then(_ => {
+    });
   }
 
   isLogged() {
     const storage = localStorage.getItem('currentJCTF');
     if (storage) {
-      this.router.navigate(['inscription']);
+      this.router.navigate(['inscription']).then(_ => {
+      });
     }
   }
 

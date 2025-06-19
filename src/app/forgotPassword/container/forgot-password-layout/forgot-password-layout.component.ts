@@ -101,13 +101,13 @@ export class ForgotPasswordLayoutComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['login']);
+    this.router.navigate(['login']).then(_ => {});
   }
 
   isLogged() {
     const storage = localStorage.getItem('currentJCTF');
     if (storage) {
-      this.router.navigate(['inscription']);
+      this.router.navigate(['inscription']).then(_ =>{} );
     }
   }
 

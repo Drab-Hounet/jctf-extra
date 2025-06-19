@@ -21,14 +21,6 @@ export class InscriptionLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.tokenUtilityClass = new TokenUtilityClass(this.router);
     this.getInformationToken();
-    // this.isLogged()
-  }
-
-  isLogged() {
-    const storage = localStorage.getItem('currentJCTF');
-    if (!storage) {
-      this.router.navigate(['login']);
-    }
   }
 
   getInformationToken(): void {

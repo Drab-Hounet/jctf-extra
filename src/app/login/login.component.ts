@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLogged() {
     const storage = localStorage.getItem('currentJCTF');
     if (storage) {
-      this.router.navigate(['inscription']);
+      this.router.navigate(['inscription']).then(_ => {});
     }
   }
 
@@ -100,11 +100,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onNewUserForm() {
-    this.router.navigate(['new']);
+    this.router.navigate(['new']).then(_ => {});
   }
 
   onForgotPassword() {
-    this.router.navigate(['forgotPassword']);
+    this.router.navigate(['forgotPassword']).then(_ =>{} );
   }
 
   async redirectToBoard() {

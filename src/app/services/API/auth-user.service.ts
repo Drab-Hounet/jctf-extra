@@ -1,5 +1,5 @@
 import {Inject, Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environmnent/environment';
 import {Configuration} from '../configuration';
@@ -27,29 +27,12 @@ export class AuthUserService {
   }
 
   /**
-   * @param consumes string[] mime-types
-   * @return true: consumes contains 'multipart/form-data', false: otherwise
-   */
-  private canConsumeForm(consumes: string[]): boolean {
-    const form = 'multipart/form-data';
-    for (const consume of consumes) {
-      if (form === consume) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-
-  /**
    * Authentification user
    * @param adminLogin AdminLoginModel
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param observe set whether to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createAuthUser(adminLogin: AdminLoginModel, observe?: 'body', reportProgress?: boolean): Observable<ResponseUserApiModel>;
-  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseUserApiModel>>;
-  public createAuthUser(adminLogin: AdminLoginModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseUserApiModel>>;
   public createAuthUser(adminLogin: AdminLoginModel, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (adminLogin === null || adminLogin === undefined) {
@@ -91,12 +74,10 @@ export class AuthUserService {
   /**
    * Create new user
    * @param newUser UserModel
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param observe set whether to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public createUser(newUser: UserModel, observe?: 'body', reportProgress?: boolean): Observable<ResponseUserApiModel>;
-  public createUser(newUser: UserModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseUserApiModel>>;
-  public createUser(newUser: UserModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseUserApiModel>>;
   public createUser(newUser: UserModel, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (newUser === null || newUser === undefined) {
@@ -138,12 +119,10 @@ export class AuthUserService {
   /**
    * ask recovery Password (mail)
    * @param mail string
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param observe set whether to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public recoveryPassword(mail: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseUserApiModel>;
-  public recoveryPassword(mail: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseUserApiModel>>;
-  public recoveryPassword(mail: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseUserApiModel>>;
   public recoveryPassword(mail: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (mail === null || mail === undefined) {
@@ -180,15 +159,14 @@ export class AuthUserService {
       }
     );
   }
+
   /**
    * ask recovery Password (mail)
-   * @param mail string
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param user user
+   * @param observe set whether to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
   public recoverySetPassword(user: UserModel, observe?: 'body', reportProgress?: boolean): Observable<ResponseUserApiModel>;
-  public recoverySetPassword(user: UserModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseUserApiModel>>;
-  public recoverySetPassword(user: UserModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseUserApiModel>>;
   public recoverySetPassword(user: UserModel, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (user === null || user === undefined) {

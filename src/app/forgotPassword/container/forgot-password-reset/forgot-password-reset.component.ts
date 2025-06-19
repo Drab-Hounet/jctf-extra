@@ -101,7 +101,8 @@ export class ForgotPasswordResetComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    this.router.navigate(['forgotPassword', 'request']);
+    this.router.navigate(['forgotPassword', 'request']).then(_ => {
+    });
   }
 
   createForm() {
