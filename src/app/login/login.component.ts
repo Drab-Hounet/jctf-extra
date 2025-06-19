@@ -14,6 +14,7 @@ import {StateApiModel} from '../models/stateApiModel';
 import {delay} from 'q';
 import {UserModel} from '../models/userModel';
 import {SpinnerComponent} from '../shared/component/spinner/spinner.component';
+import {DividerModule} from 'primeng/divider';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ import {SpinnerComponent} from '../shared/component/spinner/spinner.component';
     ToastModule,
     ReactiveFormsModule,
     SpinnerComponent,
+    DividerModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -72,7 +74,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           this._spinner = false;
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
             this.setToken(data.response);
-            console.log(data.response)
             this.displayMessage('Identification réussie', 'Bienvenue ' + data.response[0].surname, 'success');
             this.redirectToBoard().then(_ => {
             });

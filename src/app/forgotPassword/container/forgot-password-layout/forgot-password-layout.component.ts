@@ -38,7 +38,6 @@ export class ForgotPasswordLayoutComponent implements OnInit, OnDestroy {
   private _subscription: Subscription = new Subscription();
   private _recoveryPasswordMail$: Subject<string> = new Subject();
 
-
   constructor(private recoveryPasswordMailService: RecoveryPasswordMailService,
               private fb: FormBuilder,
               private router: Router,

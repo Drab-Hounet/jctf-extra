@@ -21,4 +21,5 @@ export class RecoveryPasswordMailService {
         return of(error);
       })
     );
-  }}
+  }
+}
