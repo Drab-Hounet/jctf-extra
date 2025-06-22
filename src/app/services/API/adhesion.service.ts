@@ -65,8 +65,39 @@ export class AdhesionService {
    * Récupère le détail d'une adhésion par ID
    * @param id ID de l'adhésion
    */
-  getAdhesionDetails(id: number, token: string): Observable<any> {
-    const headers = new HttpHeaders().set('Authorization', token);
-    return this.httpClient.get<any>(`${this.basePath}/${id}`, {headers});
+  public getAdhesionDetails(id: number, authorization: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseAdhesionApiModel>;
+  public getAdhesionDetails(id: number, authorization: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    if (id === null || id === undefined) {
+      throw new Error('Required parameter id was null or undefined when calling deleteAdhesion.');
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    let headers = this.defaultHeaders;
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+      headers = headers.set('Authorization', authorization);
+    }
+
+    const consumes: string[] = [
+      'application/json'
+    ];
+
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.get<ResponseAdhesionApiModel>(`${this.basePath}/api/ext/adhesion/${encodeURIComponent(String(id))}`,
+      {
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      });
   }
 }

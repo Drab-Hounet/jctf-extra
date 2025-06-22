@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {catchError, Observable, of, switchMap} from 'rxjs';
 import {AdhesionService} from '../API/adhesion.service';
+import {catchError, Observable, of, switchMap} from 'rxjs';
 import {ResponseAdhesionApiModel} from '../../models/responseApiAdhesionModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GetAllAdhesionsService {
+export class GetAdhesionDetailsService {
 
   constructor(private adhesionService: AdhesionService) {
   }
 
-  getAllAdhesions(authorization: string): Observable<ResponseAdhesionApiModel | null> {
-    return this.adhesionService.getAllAdhesions(authorization).pipe(
+  getAdhesionDetails(id: number, authorization: string): Observable<ResponseAdhesionApiModel | null> {
+    return this.adhesionService.getAdhesionDetails(id, authorization).pipe(
       switchMap(data => {
         return of(data);
       }),

@@ -3,7 +3,7 @@
       <div class="grid">
         <div *ngFor="let adhesion of _listAdhesions">
           <div class="col-12">
-            <div class="board-component w-full border-round-md shadow-6 bg-blue-900 gap-2 cursor-pointer">
+            <div class="board-component w-full border-round-md shadow-6 bg-blue-900 gap-2 cursor-pointer" (click)="onOpenModal(adhesion)">
               <div class="text-50">
                 <p class="label-board text-2xl font-bold p-3 h-3rem">
                   {{ adhesion.beginYear }} - {{ adhesion.endYear }}
@@ -19,5 +19,6 @@
 
     </p-card>
 </div>
+<app-modal-adhesion-details [iAdhesion]="_adhesionDetails"></app-modal-adhesion-details>
 <app-spinner [iIsOpen]=_spinner></app-spinner>
 <p-toast></p-toast>

@@ -115,7 +115,6 @@ export class AuthUserService {
     );
   }
 
-
   /**
    * ask recovery Password (mail)
    * @param mail string
