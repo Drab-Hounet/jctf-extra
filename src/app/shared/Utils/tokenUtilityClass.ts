@@ -37,7 +37,7 @@ export class TokenUtilityClass {
    */
   async redirectToLogin() {
     await delay(1000);
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentJCTF');
     this._router.navigate(['login']).then();
   }
 }

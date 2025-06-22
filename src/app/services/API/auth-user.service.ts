@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../../environmnent/environment';
 import {Configuration} from '../configuration';
 import {BASE_PATH} from '../variables';
-import {ResponseUserApiModel} from '../../models/ResponseApiUser';
+import {ResponseUserApiModel} from '../../models/responseApiUser';
 import {AdminLoginModel} from '../../models/adminLoginModel';
 import {UserModel} from '../../models/userModel';
 
