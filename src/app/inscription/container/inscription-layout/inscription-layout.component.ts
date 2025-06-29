@@ -13,6 +13,7 @@ import {NgFor, NgIf} from '@angular/common';
 import {Card} from 'primeng/card';
 import {GetAdhesionDetailsService} from '../../../services/adhesion/get-adhesion-details.service';
 import {InscriptionDetailsComponent} from '../../component/inscription-details/inscription-details.component';
+import {CategoryClass} from '../../../shared/Utils/categoryClass';
 
 @Component({
   selector: 'app-inscription-layout',
@@ -90,7 +91,7 @@ export class InscriptionLayoutComponent implements OnInit, OnDestroy {
         tap(data => {
           this._spinner = false;
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
-            this._adhesionDetails = data.response[0];
+            this.fillAdherent(data.response[0]);
           } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
             this.displayMessage('Identification erronée', 'Erreur', 'error');
             this.tokenUtilityClass.redirectToLogin().then(_ => {
@@ -99,6 +100,17 @@ export class InscriptionLayoutComponent implements OnInit, OnDestroy {
             this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
           }
         })).subscribe());
+  }
+
+  fillAdherent(adhesion: AdhesionModel) {
+    let categoryClass = new CategoryClass();
+    for (let adherent of adhesion.listAdherent || []) {
+      if(adherent.birth && adhesion.beginYear) {
+        let date:Date = new Date(adherent.birth);
+        adherent.category = categoryClass.getCategory(adhesion.beginYear - date.getFullYear())
+      }
+    }
+    this._adhesionDetails = adhesion;
   }
 
   onOpenInscriptionProcess(adhesion: AdhesionModel) {
