@@ -11,12 +11,15 @@ import {SpinnerComponent} from '../../../shared/component/spinner/spinner.compon
 import {ToastModule} from 'primeng/toast';
 import {NgFor, NgIf} from '@angular/common';
 import {Card} from 'primeng/card';
+import {GetAdhesionDetailsService} from '../../../services/adhesion/get-adhesion-details.service';
+import {InscriptionDetailsComponent} from '../../component/inscription-details/inscription-details.component';
 
 @Component({
   selector: 'app-inscription-layout',
   imports: [
     HeaderComponent,
     SpinnerComponent,
+    InscriptionDetailsComponent,
     ToastModule,
     NgFor,
     NgIf,
@@ -33,13 +36,16 @@ export class InscriptionLayoutComponent implements OnInit, OnDestroy {
   _pseudo!: string;
   _spinner: boolean = false;
   _listAdhesionsActive: AdhesionModel[] = [];
+  _adhesionDetails: AdhesionModel | null = null;
 
   private _subscription: Subscription = new Subscription();
   private _getAdhesionsActive$: Subject<boolean> = new Subject();
+  private _getAdhesionDetails$: Subject<number> = new Subject();
 
   constructor(
     private router: Router,
     private getAllAdhesionsService: GetAllAdhesionsService,
+    private getAdhesionDetailsService: GetAdhesionDetailsService,
     private messageService: MessageService) {
   }
 
@@ -74,10 +80,31 @@ export class InscriptionLayoutComponent implements OnInit, OnDestroy {
             this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
           }
         })).subscribe());
+
+    // get adhesion details
+    this._subscription.add(
+      this._getAdhesionDetails$.pipe(
+        switchMap(id => {
+          return this.getAdhesionDetailsService.getAdhesionDetails(id, this._token);
+        }),
+        tap(data => {
+          this._spinner = false;
+          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
+            this._adhesionDetails = data.response[0];
+          } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
+            this.displayMessage('Identification erronée', 'Erreur', 'error');
+            this.tokenUtilityClass.redirectToLogin().then(_ => {
+            });
+          } else {
+            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+          }
+        })).subscribe());
   }
 
   onOpenInscriptionProcess(adhesion: AdhesionModel) {
-
+    if (adhesion.id) {
+      this._getAdhesionDetails$.next(adhesion.id);
+    }
   }
 
   getInformationToken(): void {

@@ -1,0 +1,33 @@
+<div class="m-5">
+  <p-card class="w-full shadow-1 min-h-screen" styleClass="bg-blue-50" header="Détails inscription" subheader="">
+    <h3>Listes des adhérents avec paiement à jour :</h3>
+    <i *ngIf="_adhesionDetails?.listAdherent?.length == 0">Aucun adhérent trouvé</i>
+    <div *ngFor="let adherent of _adhesionDetails?.listAdherent">
+      <div class="text-lg font-bold">
+        <span>{{ adherent.name }} {{ adherent.surname }}</span>
+      </div>
+      <div class="flex gap-2 mt-2">
+        <label for="">Date de naissance : </label>
+        <span>{{ adherent.birth  | date: 'fullDate' }} <i>(catégorie : {{ adherent.category }})</i></span>
+      </div>
+
+      <div class="flex gap-2 mt-2">
+        <label for="">Activités : </label>
+        <p-tag *ngIf="adherent.judo" severity="info" value="Judo"/>
+        <p-tag *ngIf="adherent.jujitsu" severity="warn" value="Jujitsu"/>
+        <p-tag *ngIf="adherent.taiso" severity="danger" value="Taiso"/>
+        <p-tag *ngIf="adherent.jjb" severity="secondary" value="JJB"/>
+      </div>
+
+      <p-divider class="mt-5 mb-2"></p-divider>
+    </div>
+    <h3 class="mt-5">Listes des adhérents à régulariser :</h3>
+    <i>Aucun adhérent trouvé</i>
+  </p-card>
+  <p-button
+    styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
+    (click)="onNewInscrition()">
+    <span class="text-xs text-blue-900 font-bold">Nouvelle inscription ?</span>
+  </p-button>
+
+</div>
