@@ -34,7 +34,6 @@ export class ModalAdhesionDetailsComponent {
 
   set iAdhesion(adhesion: AdhesionModel | null) {
     if (adhesion) {
-      console.log(adhesion);
       this._visible = true;
       this.fillAdherent(adhesion);
     }

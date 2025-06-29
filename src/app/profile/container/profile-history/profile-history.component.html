@@ -1,23 +1,24 @@
 <div class="m-3">
-    <p-card class="w-full shadow-1 min-h-screen		" styleClass="bg-blue-50" header="Historique des adhésions" subheader="">
-      <div class="grid">
-        <div *ngFor="let adhesion of _listAdhesions">
-          <div class="col-12">
-            <div class="board-component w-full border-round-md shadow-6 bg-blue-900 gap-2 cursor-pointer" (click)="onOpenModal(adhesion)">
-              <div class="text-50">
-                <p class="label-board text-2xl font-bold p-3 h-3rem">
-                  {{ adhesion.beginYear }} - {{ adhesion.endYear }}
-                </p>
-                <p class="label-count text-xs	p-3 align-content-end h-5rem">
-                  Nombre d'adhérents : {{ adhesion.numberAdherent }}
-                </p>
-              </div>
+  <p-card class="w-full shadow-1 min-h-screen" styleClass="bg-blue-50" header="Historique des adhésions" subheader="">
+    <div class="grid">
+      <div *ngFor="let adhesion of _listAdhesions">
+        <div class="col-12">
+          <div class="board-component w-full border-round-md shadow-6 bg-blue-900 gap-2 cursor-pointer"
+               (click)="onOpenModal(adhesion)">
+            <div class="text-50">
+              <p class="label-board text-2xl font-bold p-3 h-3rem">
+                {{ adhesion.beginYear }} - {{ adhesion.endYear }}
+              </p>
+              <p class="label-count text-xs	p-3 align-content-end h-5rem">
+                Nombre d'adhérents : {{ adhesion.numberAdherent }}
+              </p>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-    </p-card>
+  </p-card>
 </div>
 <app-modal-adhesion-details [iAdhesion]="_adhesionDetails"></app-modal-adhesion-details>
 <app-spinner [iIsOpen]=_spinner></app-spinner>

@@ -9,6 +9,7 @@ export interface AdhesionModel {
   cadetAmount?: number;
   juniorAmount?: number;
   seniorAmount?: number;
+  inscriptionAvailable?:boolean;
 
   // gestionLicence?: FinanceInformationModel;
   id?: number;

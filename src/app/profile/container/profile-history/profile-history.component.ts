@@ -99,6 +99,7 @@ export class ProfileHistoryComponent implements OnInit, OnDestroy {
 
   onOpenModal(adhesion: AdhesionModel) {
     if (adhesion.id) {
+      this._spinner = true;
       this._getAdhesionDetails$.next(adhesion.id);
     }
   }
