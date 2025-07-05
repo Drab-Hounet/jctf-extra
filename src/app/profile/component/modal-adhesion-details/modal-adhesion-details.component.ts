@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng/button';
 import {AdhesionModel} from '../../../models/adhesionModel';
@@ -45,8 +45,8 @@ export class ModalAdhesionDetailsComponent {
   fillAdherent(adhesion: AdhesionModel) {
     let categoryClass = new CategoryClass();
     for (let adherent of adhesion.listAdherent || []) {
-      if(adherent.birth && adhesion.beginYear) {
-        let date:Date = new Date(adherent.birth);
+      if (adherent.birth && adhesion.beginYear) {
+        let date: Date = new Date(adherent.birth);
         adherent.category = categoryClass.getCategory(adhesion.beginYear - date.getFullYear())
       }
     }

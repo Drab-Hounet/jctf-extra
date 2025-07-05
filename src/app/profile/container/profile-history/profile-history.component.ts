@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {CardModule} from 'primeng/card';
 import {ToastModule} from 'primeng/toast';
@@ -9,7 +9,7 @@ import {StateApiModel} from '../../../models/stateApiModel';
 import {GetAllAdhesionsService} from '../../../services/adhesion/get-all-adhesions.service';
 import {TokenUtilityClass} from '../../../shared/Utils/tokenUtilityClass';
 import {AdhesionModel} from '../../../models/adhesionModel';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {ModalAdhesionDetailsComponent} from '../../component/modal-adhesion-details/modal-adhesion-details.component';
 import {GetAdhesionDetailsService} from '../../../services/adhesion/get-adhesion-details.service';
 
@@ -20,6 +20,7 @@ import {GetAdhesionDetailsService} from '../../../services/adhesion/get-adhesion
     ToastModule,
     SpinnerComponent,
     NgForOf,
+    NgIf,
     ModalAdhesionDetailsComponent
   ],
   standalone: true,
@@ -27,7 +28,7 @@ import {GetAdhesionDetailsService} from '../../../services/adhesion/get-adhesion
   styleUrl: './profile-history.component.scss',
   providers: [MessageService]
 })
-export class ProfileHistoryComponent implements OnInit, OnDestroy {
+export class ProfileHistoryComponent implements OnInit, OnDestroy, AfterViewInit {
   _spinner: boolean = false;
   _token!: string;
 
@@ -43,6 +44,10 @@ export class ProfileHistoryComponent implements OnInit, OnDestroy {
               private getAdhesionDetailsService: GetAdhesionDetailsService,
               private router: Router,
               private messageService: MessageService) {
+  }
+
+  ngAfterViewInit() {
+    this._adhesionDetails = null;
   }
 
   ngOnInit() {

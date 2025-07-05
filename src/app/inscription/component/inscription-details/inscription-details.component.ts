@@ -5,6 +5,7 @@ import {Card} from 'primeng/card';
 import {Divider} from 'primeng/divider';
 import {Tag} from 'primeng/tag';
 import {Button} from 'primeng/button';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-inscription-details',
@@ -32,13 +33,16 @@ export class InscriptionDetailsComponent {
 
   set iAdhesionDetails(adhesionDetails: AdhesionModel | null) {
     if (adhesionDetails) {
-
       this._adhesionDetails = adhesionDetails;
     }
   }
 
+  constructor(private router: Router) {
+  }
 
-  onNewInscrition() {}
-
-
+  onNewInscrition() {
+    if (this._adhesionDetails) {
+      this.router.navigate(['inscription', 'new', this._adhesionDetails.id]).then(_ =>{} );
+    }
+  }
 }

@@ -1,0 +1,53 @@
+<app-header [iPseudo]="_pseudo"></app-header>
+<div class="grid mt-3">
+  <div class="col-6">
+    <div class="board-component w-full border-round-md shadow-6 bg-blue-900 gap-2 cursor-pointer"
+         (click)="onRedirect()">
+      <div *ngIf="_adhesion" class="text-50">
+        <p class="label-board text-2xl font-bold p-3 h-2rem">
+          {{ _adhesion.beginYear }} - {{ _adhesion.endYear }}
+        </p>
+        <p class="label-count text-xs	p-3 align-content-end h-5rem">
+          Nombre d'adhérents : {{ _adhesion.numberAdherent }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div
+      class="board-component w-full border-round-md border-solid border-1	border-blue-900 shadow-6 bg-surface gap-2 cursor-pointer"
+      (click)="onOpenBasket()">
+      <div *ngIf="_adhesion" class="text-blue-900">
+        <p class="label-board text-2xl font-bold p-3 h-2rem">
+          Panier
+        </p>
+        <p class="label-count text-xs	p-3 align-content-end h-5rem">
+          Nombre d'adhérents : {{ _adhesion.numberAdherent }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4 col-offset-4 mt-3">
+    <p-button
+      icon="pi pi-fw pi-wallet"
+      styleClass="w-full bg-white border-900 text-color text-sm
+        hover:bg-white hover:border-400	 hover:text-color "
+      label="Création adhérent"
+      (click)="onOpenBasket()"
+    ></p-button>
+  </div>
+
+  <div class="col-4 col-offset-4 mt-3">
+    <p-button
+      icon="pi pi-fw pi-wallet"
+      styleClass="w-full bg-white border-900 text-color text-sm
+        hover:bg-white hover:border-400	 hover:text-color "
+      label="Inscription"
+      (click)="onOpenBasket()"
+    ></p-button>
+  </div>
+</div>
+
+<app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
+<p-toast></p-toast>

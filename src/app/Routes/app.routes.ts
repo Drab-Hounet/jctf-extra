@@ -13,11 +13,13 @@ import {
   ForgotPasswordResetComponent
 } from '../forgotPassword/container/forgot-password-reset/forgot-password-reset.component';
 import {ProfileLayoutComponent} from '../profile/container/profile-layout/profile-layout.component';
+import {InscriptionNewComponent} from '../inscription/container/inscription-new/inscription-new.component';
 
 export const routes: Routes = [
   {path: '*', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'inscription', component: InscriptionLayoutComponent, canActivate: [AuthGuard]},
+  {path: 'inscription/new/:id', component: InscriptionNewComponent, canActivate: [AuthGuard]},
   {path: 'new', component: NewUserLayoutComponent},
   {path: 'profile', component: ProfileLayoutComponent, canActivate: [AuthGuard]},
   {path: 'forgotPassword',

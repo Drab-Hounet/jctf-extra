@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../../shared/component/header/header.component';
 import {TokenUtilityClass} from '../../../shared/Utils/tokenUtilityClass';
 import {Router} from '@angular/router';
@@ -105,8 +105,8 @@ export class InscriptionLayoutComponent implements OnInit, OnDestroy {
   fillAdherent(adhesion: AdhesionModel) {
     let categoryClass = new CategoryClass();
     for (let adherent of adhesion.listAdherent || []) {
-      if(adherent.birth && adhesion.beginYear) {
-        let date:Date = new Date(adherent.birth);
+      if (adherent.birth && adhesion.beginYear) {
+        let date: Date = new Date(adherent.birth);
         adherent.category = categoryClass.getCategory(adhesion.beginYear - date.getFullYear())
       }
     }
