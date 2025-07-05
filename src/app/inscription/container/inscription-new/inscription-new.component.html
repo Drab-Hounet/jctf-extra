@@ -22,7 +22,7 @@
           Panier
         </p>
         <p class="label-count text-xs	p-3 align-content-end h-5rem">
-          Nombre d'adhérents : {{ _adhesion.numberAdherent }}
+          Nombre d'adhérents : {{ _baskets.length }}
         </p>
       </div>
     </div>
@@ -31,6 +31,7 @@
   <div class="col-4 col-offset-4 mt-3">
     <p-button
       icon="pi pi-fw pi-wallet"
+      pTooltip="Création d'un nouvel adhérent" tooltipPosition="right"
       styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400	 hover:text-color "
       label="Création adhérent"
@@ -41,6 +42,7 @@
   <div class="col-4 col-offset-4 mt-3">
     <p-button
       icon="pi pi-fw pi-wallet"
+      pTooltip="Inscription d'un nouvel adhérent sur la saison" tooltipPosition="right"
       styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400	 hover:text-color "
       label="Inscription"
@@ -49,5 +51,6 @@
   </div>
 </div>
 
+<app-modal-basket *ngIf="_baskets" [iBaskets]=_baskets [iOpenModal]="_isOpenModal" (oModalClose)="onModalBasketClose($event)"></app-modal-basket>
 <app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
 <p-toast></p-toast>

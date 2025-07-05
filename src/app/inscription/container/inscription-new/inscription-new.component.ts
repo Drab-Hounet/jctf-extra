@@ -11,15 +11,22 @@ import {GetAdhesionDetailsService} from '../../../services/adhesion/get-adhesion
 import {NgIf} from '@angular/common';
 import {AdhesionModel} from '../../../models/adhesionModel';
 import {Button} from 'primeng/button';
+import {GetBasketAdherentService} from '../../../services/basket/get-basket-adherent.service';
+import {AdherentBasketModel} from '../../../models/adherentBasketModel';
+import {TooltipModule} from 'primeng/tooltip';
+import {ModalBasketComponent} from '../../component/modal-basket/modal-basket.component';
+import {CategoryClass} from '../../../shared/Utils/categoryClass';
 
 @Component({
   selector: 'app-inscription-new',
   imports: [
     HeaderComponent,
     SpinnerComponent,
+    ModalBasketComponent,
     ToastModule,
     NgIf,
     Button,
+    TooltipModule
   ],
   standalone: true,
   templateUrl: './inscription-new.component.html',
@@ -33,13 +40,17 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   _spinner: boolean = false;
 
   _adhesion: AdhesionModel | null = null;
+  _baskets: AdherentBasketModel[] = [];
+  _isOpenModal = false;
 
   private _subscription: Subscription = new Subscription();
   private _getAdhesionDetails$: Subject<number> = new Subject();
+  private _getBasket$: Subject<number> = new Subject();
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private getAdhesionDetailsService: GetAdhesionDetailsService,
+              private getBasketAdherentService: GetBasketAdherentService,
               private messageService: MessageService) {
   }
 
@@ -66,9 +77,27 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
           return this.getAdhesionDetailsService.getAdhesionDetails(id, this._token);
         }),
         tap(data => {
-          this._spinner = false;
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
             this.fillAdherent(data.response[0]);
+          } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
+            this.displayMessage('Identification erronée', 'Erreur', 'error');
+            this.tokenUtilityClass.redirectToLogin().then(_ => {
+            });
+          } else {
+            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+          }
+        })).subscribe());
+
+    // get basket from user and adhesion
+    this._subscription.add(
+      this._getBasket$.pipe(
+        switchMap(idAdhesion => {
+          return this.getBasketAdherentService.getBasketAdherent(idAdhesion, this._token);
+        }),
+        tap(data => {
+          this._spinner = false;
+          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
+            this.fillAdherentBasket(data.response[0].listAdherent);
           } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
             this.displayMessage('Identification erronée', 'Erreur', 'error');
             this.tokenUtilityClass.redirectToLogin().then(_ => {
@@ -81,6 +110,22 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
 
   fillAdherent(adhesion: AdhesionModel) {
     this._adhesion = adhesion;
+    if (this._adhesion.id) {
+      this._getBasket$.next(this._adhesion.id);
+    }
+  }
+
+  fillAdherentBasket(adherentBaskets: AdherentBasketModel[]) {
+    if (this._adhesion?.beginYear) {
+      let categoryClass = new CategoryClass();
+      for (let adherent of adherentBaskets || []) {
+        if (adherent.birth && this._adhesion.beginYear) {
+          let date: Date = new Date(adherent.birth);
+          adherent.category = categoryClass.getCategory(this._adhesion.beginYear - date.getFullYear())
+        }
+      }
+      this._baskets = adherentBaskets;
+    }
   }
 
   getInformationToken(): void {
@@ -90,7 +135,11 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   }
 
   onOpenBasket() {
+    this._isOpenModal = true;
+  }
 
+  onModalBasketClose(isModalClosed: boolean) {
+    this._isOpenModal = false;
   }
 
   onRedirect() {

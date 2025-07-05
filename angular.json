@@ -34,6 +34,7 @@
             "styles": [
               "src/styles.scss",
               "public/font/font.scss",
+              "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css"
             ],
             "scripts": []
