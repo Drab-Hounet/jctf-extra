@@ -110,6 +110,12 @@ export class InscriptionLayoutComponent implements OnInit, OnDestroy {
         adherent.category = categoryClass.getCategory(adhesion.beginYear - date.getFullYear())
       }
     }
+    for (let adherent of adhesion.listAdherentBasket || []) {
+      if (adherent.birth && adhesion.beginYear) {
+        let date: Date = new Date(adherent.birth);
+        adherent.category = categoryClass.getCategory(adhesion.beginYear - date.getFullYear())
+      }
+    }
     this._adhesionDetails = adhesion;
   }
 

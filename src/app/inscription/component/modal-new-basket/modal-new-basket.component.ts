@@ -86,7 +86,6 @@ export class ModalNewBasketComponent implements OnInit {
           name: this._adherentsSelect[0].name,
           code: this._adherentsSelect[0].code
         });
-
       }
     }
   }

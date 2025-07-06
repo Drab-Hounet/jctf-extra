@@ -9,34 +9,43 @@
   <ng-template pTemplate="header">
     <span class="text-color	text-xl font-bold">Panier : </span>
   </ng-template>
-  <div *ngFor="let basket of _baskets">
-    <div class="flex justify-content-between flex-wrap">
-      <div class="text-lg font-bold">
-        <span>{{ basket.name }} {{ basket.surname }}</span>
-      </div>
-      <div class="align-content-end">
-        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
-        (click)="onDeleteBasket(basket.idBasket)" styleClass="p-button-rounded p-button-text"/>
-      </div>
-    </div>
-    <div class="flex gap-2 mt-2">
-      <label for="">Date de naissance : </label>
-      <span>{{ basket.birth  | date: 'fullDate' }} <i>(catégorie : {{ basket.category }})</i></span>
-    </div>
 
-    <div class="flex gap-2 mt-2">
-      <label for="">Activités : </label>
-      <p-tag *ngIf="basket.judo" severity="info" value="Judo"/>
-      <p-tag *ngIf="basket.jujitsu" severity="warn" value="Jujitsu"/>
-      <p-tag *ngIf="basket.taiso" severity="danger" value="Taiso"/>
-      <p-tag *ngIf="basket.jjb" severity="secondary" value="JJB"/>
-    </div>
-
-    <p-divider class="mt-5 mb-2"></p-divider>
+  <ng-container  *ngIf="_baskets?.length == 0;else notEmpty">
+  <div class="h-7rem">
+   <i class="text-sm">Votre panier est vide.</i>
   </div>
+  </ng-container>
+  <ng-template #notEmpty>
+    <div *ngFor="let basket of _baskets">
+      <div class="flex justify-content-between flex-wrap">
+        <div class="text-lg font-bold">
+          <span>{{ basket.name }} {{ basket.surname }}</span>
+        </div>
+        <div class="align-content-end">
+          <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                    (click)="onDeleteBasket(basket.idBasket)" styleClass="p-button-rounded p-button-text"/>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-2">
+        <label for="">Date de naissance : </label>
+        <span>{{ basket.birth  | date: 'fullDate' }} <i>(catégorie : {{ basket.category }})</i></span>
+      </div>
+
+      <div class="flex gap-2 mt-2">
+        <label for="">Activités : </label>
+        <p-tag *ngIf="basket.judo" severity="info" value="Judo"/>
+        <p-tag *ngIf="basket.jujitsu" severity="warn" value="Jujitsu"/>
+        <p-tag *ngIf="basket.taiso" severity="danger" value="Taiso"/>
+        <p-tag *ngIf="basket.jjb" severity="secondary" value="JJB"/>
+      </div>
+
+      <p-divider class="mt-5 mb-2"></p-divider>
+    </div>
+  </ng-template>
 
   <ng-template pTemplate="footer">
     <p-button
+      disabled="{{_baskets?.length == 0}}"
       class="mr-5"
       styleClass="border-transparent mt-2 w-full bg-white border-green-900 border-round hover:bg-green-50"
       (click)="onPaiement()">
@@ -45,6 +54,7 @@
 
     <p-button
       class="mr-5"
+      disabled="{{_baskets?.length == 0}}"
       styleClass="border-transparent mt-2 w-full bg-white border-red-900 border-round hover:bg-red-50"
       (click)="onDeleteAll()">
       <span class="text-xs text-red-900 font-bold">Tout effacer</span>

@@ -23,6 +23,7 @@ import {AdherentModel} from '../../../models/adherentModel';
 import {ResponseAdherentApiModel} from '../../../models/responseApiAdherentModel';
 import {DeleteBasketService} from '../../../services/basket/delete-basket.service';
 import {DeleteAllBasketsService} from '../../../services/basket/delete-all-baskets.service';
+import {GetAdherentsFreeService} from '../../../services/adherent/get-adherents-free.service';
 
 @Component({
   selector: 'app-inscription-new',
@@ -64,7 +65,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private getAdhesionDetailsService: GetAdhesionDetailsService,
               private getBasketAdherentService: GetBasketAdherentService,
-              private getAdherentsService: GetAdherentsService,
+              private getAdherentsFreeService: GetAdherentsFreeService,
               private createBasketService: CreateBasketService,
               private deleteBasketService: DeleteBasketService,
               private deleteAllBasketsService: DeleteAllBasketsService,
@@ -151,11 +152,11 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
     this._subscription.add(
       this._getAdherents$.pipe(
         switchMap(_ => {
-          return this.getAdherentsService.getAdherents(this._token);
+          return this.getAdherentsFreeService.getAdherentsFree(this._adhesion!.id, this._token);
         }),
         tap(data => {
           this._spinner = false;
-          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
+          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response) {
             this.fillAdherent(data);
           } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
             this.displayMessage('Identification erronée', 'Erreur', 'error');

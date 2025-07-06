@@ -16,6 +16,7 @@ export interface AdhesionModel {
   beginYear?: number;
   endYear?: number;
   listAdherent?: AdherentModel[];
+  listAdherentBasket?: AdherentModel[];
   numberAdherent?: number;
   passeport?: number;
   reducFamilleAmount?: number;
