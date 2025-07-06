@@ -69,6 +69,10 @@ export class ModalNewBasketComponent implements OnInit {
     this._visible = true;
     this._adherentsSelect = []
     this._adherents = adherents;
+    this._isJudoSelected = false;
+    this._isJujitsuSelected = false;
+    this._isTaisoSelected = false;
+    this._isJJBSelected = false;
     if (adherents.length == 0) {
       this._isEmptyAdherents = true;
     } else {
@@ -78,6 +82,11 @@ export class ModalNewBasketComponent implements OnInit {
           name: `${adherent.surname} - ${adherent.name}`,
           code: adherent.id?.toString() ?? '0'
         })
+        this._form.get('adherent')?.setValue({
+          name: this._adherentsSelect[0].name,
+          code: this._adherentsSelect[0].code
+        });
+
       }
     }
   }

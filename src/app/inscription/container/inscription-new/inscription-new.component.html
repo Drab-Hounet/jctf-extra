@@ -52,6 +52,6 @@
 </div>
 
 <app-modal-new-basket [iAdherents] ="_adherentsUser" (oNewAdherentBasket)="onNewAdherentBasket($event)"></app-modal-new-basket>
-<app-modal-basket *ngIf="_baskets" [iBaskets]=_baskets [iOpenModal]="_isOpenModal" (oModalClose)="onModalBasketClose($event)"></app-modal-basket>
+<app-modal-basket *ngIf="_baskets" [iBaskets]=_baskets [iOpenModal]="_isOpenModal" (oDeleteBasket)="onDeleteBasket($event)" (oDeleteAllBasket)="onDeleteAllBasket($event)"></app-modal-basket>
 <app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
 <p-toast></p-toast>

@@ -29,7 +29,7 @@ export class ModalBasketComponent {
     return this._visible;
   }
 
-  set iOpenModal(visible: boolean | null ) {
+  set iOpenModal(visible: boolean | null) {
     if (visible) {
       this._visible = visible;
     }
@@ -47,14 +47,19 @@ export class ModalBasketComponent {
   }
 
   @Output()
-  oModalClose: EventEmitter<boolean> = new EventEmitter<boolean>();
+  oDeleteBasket: EventEmitter<number | null> = new EventEmitter<number | null>();
 
-  onDeleteBasket(idBasket:number) {
+  @Output()
+  oDeleteAllBasket: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  onDeleteBasket(idBasket: number) {
+    this._visible = false;
+    this.oDeleteBasket.emit(idBasket);
   }
 
   onDeleteAll() {
-
+    this._visible = false;
+    this.oDeleteAllBasket.emit(true);
   }
 
   onPaiement() {
@@ -63,6 +68,6 @@ export class ModalBasketComponent {
 
   onCloseModal() {
     this._visible = false;
-    this.oModalClose.emit(true);
+    this.oDeleteBasket.emit(null);
   }
 }

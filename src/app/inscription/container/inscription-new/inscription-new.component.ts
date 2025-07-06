@@ -21,6 +21,8 @@ import {ModalNewBasketComponent} from '../../component/modal-new-basket/modal-ne
 import {GetAdherentsService} from '../../../services/adherent/get-adherents.service';
 import {AdherentModel} from '../../../models/adherentModel';
 import {ResponseAdherentApiModel} from '../../../models/responseApiAdherentModel';
+import {DeleteBasketService} from '../../../services/basket/delete-basket.service';
+import {DeleteAllBasketsService} from '../../../services/basket/delete-all-baskets.service';
 
 @Component({
   selector: 'app-inscription-new',
@@ -55,6 +57,8 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   private _getBasket$: Subject<number> = new Subject();
   private _createBasket$: Subject<AdherentBasketModel> = new Subject();
   private _getAdherents$: Subject<boolean> = new Subject();
+  private _deleteBasket$: Subject<number> = new Subject();
+  private _deleteAllBaskets$: Subject<boolean> = new Subject();
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -62,6 +66,8 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
               private getBasketAdherentService: GetBasketAdherentService,
               private getAdherentsService: GetAdherentsService,
               private createBasketService: CreateBasketService,
+              private deleteBasketService: DeleteBasketService,
+              private deleteAllBasketsService: DeleteAllBasketsService,
               private messageService: MessageService) {
   }
 
@@ -129,7 +135,6 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
           this._spinner = false;
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
             const response = data.response[0];
-            console.log(response)
             const name = `${response.surname} ${response.name}`;
             this.displayMessage(`Adhérent ${name} ajouté(e) dans votre panier`, 'Succés', 'success');
             this._getBasket$.next(this._adhesion!.id);
@@ -152,6 +157,45 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
           this._spinner = false;
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
             this.fillAdherent(data);
+          } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
+            this.displayMessage('Identification erronée', 'Erreur', 'error');
+            this.tokenUtilityClass.redirectToLogin().then(_ => {
+            });
+          } else {
+            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+          }
+        })).subscribe());
+
+    // delete basket
+    this._subscription.add(
+      this._deleteBasket$.pipe(
+        switchMap(idBasket => {
+          return this.deleteBasketService.deleteBasket(idBasket, this._token);
+        }),
+        tap(data => {
+          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response) {
+            this.displayMessage('L\'adhérent a bien été retiré du panier', 'Succés', 'success');
+            this._getBasket$.next(this._adhesion!.id);
+          } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
+            this.displayMessage('Identification erronée', 'Erreur', 'error');
+            this.tokenUtilityClass.redirectToLogin().then(_ => {
+            });
+          } else {
+            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+          }
+        })).subscribe());
+
+    // delete all baskets
+    this._subscription.add(
+      this._deleteAllBaskets$.pipe(
+        switchMap(_ => {
+          return this.deleteAllBasketsService.deleteAllBaskets(this._token);
+        }),
+        tap(data => {
+          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response) {
+            console.log(data);
+            this.displayMessage('Le panier a bien été vidé', 'Succés', 'success');
+            this._getBasket$.next(this._adhesion!.id);
           } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
             this.displayMessage('Identification erronée', 'Erreur', 'error');
             this.tokenUtilityClass.redirectToLogin().then(_ => {
@@ -208,8 +252,18 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
     this._getAdherents$.next(true);
   }
 
-  onModalBasketClose(isModalClosed: boolean) {
-    this._isOpenModal = isModalClosed;
+  onDeleteBasket(baskeIdToDelete: number | null) {
+    this._isOpenModal = false;
+    if (baskeIdToDelete) {
+      this._spinner = true;
+      this._deleteBasket$.next(baskeIdToDelete);
+    }
+  }
+
+  onDeleteAllBasket(state: boolean) {
+    this._isOpenModal = false;
+    this._spinner = true;
+    this._deleteAllBaskets$.next(true);
   }
 
   onNewAdherentBasket(newAdherentBasket: AdherentBasketModel | null) {
