@@ -4,8 +4,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Configuration} from '../configuration';
 import {Observable} from 'rxjs';
 import {BASE_PATH} from '../variables';
-import {ResponseUserApiModel} from '../../models/responseApiUser';
-import {AdminLoginModel} from '../../models/adminLoginModel';
 import {ResponseAdhesionApiModel} from '../../models/responseApiAdhesionModel';
 
 @Injectable({

@@ -4,7 +4,7 @@ import {HttpClient, HttpEvent, HttpHeaders, HttpResponse} from '@angular/common/
 import {Configuration} from '../configuration';
 import {BASE_PATH} from '../variables';
 import {AdherentBasketModel} from '../../models/adherentBasketModel';
-import {ResponseApiAdherentBasketModel} from '../../models/responseApiAdherentBasketModel';
+import {ResponseApiAdherentBasketModel, ResponseApiBasketModel} from '../../models/responseApiBasketModel';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -92,9 +92,9 @@ export class BasketService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteAllBasketAdherent(authorization: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiAdherentBasketModel>;
-  public deleteAllBasketAdherent(authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiAdherentBasketModel>>;
-  public deleteAllBasketAdherent(authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiAdherentBasketModel>>;
+  public deleteAllBasketAdherent(authorization: string, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiBasketModel>;
+  public deleteAllBasketAdherent(authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiBasketModel>>;
+  public deleteAllBasketAdherent(authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiBasketModel>>;
   public deleteAllBasketAdherent(authorization: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (authorization === null || authorization === undefined) {
@@ -118,7 +118,7 @@ export class BasketService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<ResponseApiAdherentBasketModel>('delete', `${this.basePath}/api/ext/basket`,
+    return this.httpClient.request<ResponseApiBasketModel>('delete', `${this.basePath}/api/ext/basket`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -136,9 +136,9 @@ export class BasketService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteBasketAdherent(authorization: string, idBasketAdherent: number, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiAdherentBasketModel>;
-  public deleteBasketAdherent(authorization: string, idBasketAdherent: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiAdherentBasketModel>>;
-  public deleteBasketAdherent(authorization: string, idBasketAdherent: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiAdherentBasketModel>>;
+  public deleteBasketAdherent(authorization: string, idBasketAdherent: number, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiBasketModel>;
+  public deleteBasketAdherent(authorization: string, idBasketAdherent: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiBasketModel>>;
+  public deleteBasketAdherent(authorization: string, idBasketAdherent: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiBasketModel>>;
   public deleteBasketAdherent(authorization: string, idBasketAdherent: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (authorization === null || authorization === undefined) {
@@ -166,7 +166,7 @@ export class BasketService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<ResponseApiAdherentBasketModel>('delete', `${this.basePath}/api/ext/basket/${encodeURIComponent(String(idBasketAdherent))}`,
+    return this.httpClient.request<ResponseApiBasketModel>('delete', `${this.basePath}/api/ext/basket/${encodeURIComponent(String(idBasketAdherent))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -184,9 +184,9 @@ export class BasketService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getBasketAdherent(authorization: string, idAdhesion: number, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiAdherentBasketModel>;
-  public getBasketAdherent(authorization: string, idAdhesion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiAdherentBasketModel>>;
-  public getBasketAdherent(authorization: string, idAdhesion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiAdherentBasketModel>>;
+  public getBasketAdherent(authorization: string, idAdhesion: number, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiBasketModel>;
+  public getBasketAdherent(authorization: string, idAdhesion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiBasketModel>>;
+  public getBasketAdherent(authorization: string, idAdhesion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiBasketModel>>;
   public getBasketAdherent(authorization: string, idAdhesion: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (authorization === null || authorization === undefined) {
@@ -214,7 +214,7 @@ export class BasketService {
     // to determine the Content-Type header
     const consumes: string[] = [];
 
-    return this.httpClient.request<ResponseApiAdherentBasketModel>('get', `${this.basePath}/api/ext/basket/${encodeURIComponent(String(idAdhesion))}`,
+    return this.httpClient.request<ResponseApiBasketModel>('get', `${this.basePath}/api/ext/basket/${encodeURIComponent(String(idAdhesion))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
@@ -233,9 +233,9 @@ export class BasketService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public updateBasketAdherent(body: AdherentBasketModel, authorization: string, idAdhesion: number, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiAdherentBasketModel>;
-  public updateBasketAdherent(body: AdherentBasketModel, authorization: string, idAdhesion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiAdherentBasketModel>>;
-  public updateBasketAdherent(body: AdherentBasketModel, authorization: string, idAdhesion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiAdherentBasketModel>>;
+  public updateBasketAdherent(body: AdherentBasketModel, authorization: string, idAdhesion: number, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiBasketModel>;
+  public updateBasketAdherent(body: AdherentBasketModel, authorization: string, idAdhesion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiBasketModel>>;
+  public updateBasketAdherent(body: AdherentBasketModel, authorization: string, idAdhesion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiBasketModel>>;
   public updateBasketAdherent(body: AdherentBasketModel, authorization: string, idAdhesion: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (body === null || body === undefined) {
@@ -273,7 +273,7 @@ export class BasketService {
       headers = headers.set('Content-Type', httpContentTypeSelected);
     }
 
-    return this.httpClient.request<ResponseApiAdherentBasketModel>('put', `${this.basePath}/api/ext/basket/${encodeURIComponent(String(idAdhesion))}`,
+    return this.httpClient.request<ResponseApiBasketModel>('put', `${this.basePath}/api/ext/basket/${encodeURIComponent(String(idAdhesion))}`,
       {
         body: body,
         withCredentials: this.configuration.withCredentials,

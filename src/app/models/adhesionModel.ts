@@ -12,7 +12,7 @@ export interface AdhesionModel {
   inscriptionAvailable?:boolean;
 
   // gestionLicence?: FinanceInformationModel;
-  id?: number;
+  id: number;
   beginYear?: number;
   endYear?: number;
   listAdherent?: AdherentModel[];

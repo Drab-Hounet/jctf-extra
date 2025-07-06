@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BasketService} from '../API/basket.service';
 import {catchError, Observable, of, switchMap} from 'rxjs';
-import {ResponseApiAdherentBasketModel} from '../../models/responseApiAdherentBasketModel';
+import {ResponseApiBasketModel} from '../../models/responseApiBasketModel';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class GetBasketAdherentService {
 
   constructor(private basketService : BasketService) {}
 
-  getBasketAdherent(idAdhesion: number, authorization: string): Observable<ResponseApiAdherentBasketModel | null> {
+  getBasketAdherent(idAdhesion: number, authorization: string): Observable<ResponseApiBasketModel | null> {
     return this.basketService.getBasketAdherent(authorization, idAdhesion).pipe(
       switchMap(data => {
         return of(data);
@@ -21,5 +21,4 @@ export class GetBasketAdherentService {
       })
     );
   }
-
 }

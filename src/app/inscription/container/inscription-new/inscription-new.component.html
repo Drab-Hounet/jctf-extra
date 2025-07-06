@@ -1,7 +1,7 @@
 <app-header [iPseudo]="_pseudo"></app-header>
 <div class="grid mt-3">
   <div class="col-6">
-    <div class="board-component w-full border-round-md shadow-6 bg-blue-900 gap-2 cursor-pointer"
+    <div class="w-full border-round-md shadow-6 bg-blue-900 gap-2 cursor-pointer"
          (click)="onRedirect()">
       <div *ngIf="_adhesion" class="text-50">
         <p class="label-board text-2xl font-bold p-3 h-2rem">
@@ -15,7 +15,7 @@
   </div>
   <div class="col-6">
     <div
-      class="board-component w-full border-round-md border-solid border-1	border-blue-900 shadow-6 bg-surface gap-2 cursor-pointer"
+      class="w-full border-round-md border-solid border-1	border-blue-900 shadow-6 bg-surface gap-2 cursor-pointer"
       (click)="onOpenBasket()">
       <div *ngIf="_adhesion" class="text-blue-900">
         <p class="label-board text-2xl font-bold p-3 h-2rem">
@@ -30,7 +30,7 @@
 
   <div class="col-4 col-offset-4 mt-3">
     <p-button
-      icon="pi pi-fw pi-wallet"
+      icon="pi pi-fw pi-user"
       pTooltip="Création d'un nouvel adhérent" tooltipPosition="right"
       styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400	 hover:text-color "
@@ -41,16 +41,17 @@
 
   <div class="col-4 col-offset-4 mt-3">
     <p-button
-      icon="pi pi-fw pi-wallet"
+      icon="pi pi-fw pi-user-plus"
       pTooltip="Inscription d'un nouvel adhérent sur la saison" tooltipPosition="right"
       styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400	 hover:text-color "
       label="Inscription"
-      (click)="onOpenBasket()"
+      (click)="onOpenNewInscription()"
     ></p-button>
   </div>
 </div>
 
+<app-modal-new-basket [iAdherents] ="_adherentsUser" (oNewAdherentBasket)="onNewAdherentBasket($event)"></app-modal-new-basket>
 <app-modal-basket *ngIf="_baskets" [iBaskets]=_baskets [iOpenModal]="_isOpenModal" (oModalClose)="onModalBasketClose($event)"></app-modal-basket>
 <app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
 <p-toast></p-toast>
