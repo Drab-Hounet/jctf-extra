@@ -1,0 +1,285 @@
+<p-dialog
+  [(visible)]="_visible"
+  [style]="{ width: '90vw', height: '85vh' }"
+  [maximizable]="true"
+  (onHide)="onCloseModal()"
+  [closeOnEscape]="false"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <span class="text-color	text-xl font-bold">Ajout d'un adhérent</span>
+  </ng-template>
+
+  <div class="">
+    <div *ngIf="_isError" class="mb-1">
+      <i class="text-sm text-red-800">Attention tous les champs obligatoires ne sont pas remplis.</i>
+    </div>
+    <form class="text-sm" [formGroup]="_formCreate">
+      <div class="grid">
+        <div class="col-4">
+          <legend>Nom*</legend>
+          <input pInputText formControlName="name" class="text-sm" type="text" pSize="small"/>
+        </div>
+
+        <div class="col-4">
+          <legend>Prénom*</legend>
+          <input
+            pInputText
+            type="text"
+            pSize="small"
+            formControlName="surname"
+            placeholder="prénom"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Genre</legend>
+          <ng-container *ngIf="_isMasculin; else elseBlockGender">
+            <div class="sexe-icon" (click)="onChangeGender()">
+              <p-image
+                src="/icons/sexe-masculin.png"
+                alt="masculin"
+                width="16px"
+              ></p-image>
+            </div>
+          </ng-container>
+          <ng-template #elseBlockGender>
+            <div class="sexe-icon" (click)="onChangeGender()">
+              <p-image
+                src="/icons/sexe-feminin.png"
+                alt="feminin"
+                width="16px"
+              ></p-image>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="col-4">
+          <legend>Adresse</legend>
+          <input
+            pInputText
+            type="text"
+            pSize="small"
+            formControlName="adresse"
+            placeholder="adresse"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Code postal</legend>
+          <input
+            pInputText
+            type="text"
+            pSize="small"
+            formControlName="codePostal"
+            placeholder="code postal"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Ville</legend>
+          <input
+            pInputText
+            type="text"
+            pSize="small"
+            formControlName="ville"
+            placeholder="ville"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Téléphone*</legend>
+          <input
+            pInputText
+            type="text"
+            pSize="small"
+            formControlName="phone"
+            placeholder="Téléphone"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Téléphone Fixe</legend>
+          <input
+            pInputText
+            type="text"
+            pSize="small"
+            formControlName="phoneFixe"
+            placeholder="Téléphone Fixe"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Téléphone Bureau</legend>
+          <input
+            pInputText
+            type="text"
+            pSize="small"
+            formControlName="phoneOffice"
+            placeholder="Téléphone Bureau"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Mail*</legend>
+          <input
+            pInputText
+            name="mail"
+            type="text"
+            pSize="small"
+            formControlName="mail"
+            placeholder="mail"
+          />
+        </div>
+
+        <div class="col-4">
+          <legend>Date d'anniversaire*</legend>
+          <div class="flex flex-col gap-1">
+            <p-datepicker
+              size="small"
+              formControlName="birthDay" dateFormat="dd/mm/yy"
+              (onInput)="onDateChange()"
+              (onClose)="onDateChange()"
+            />
+          </div>
+        </div>
+
+        <ng-container *ngIf="_sectionParentVisible">
+          <!-- parent 1 -->
+          <div class="col-12">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <b>Parent 1</b>
+              </div>
+            </p-divider>
+          </div>
+          <div class="col-4">
+            <legend>Parent 1</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="parent1"
+              placeholder="Parent 1"
+            />
+          </div>
+          <div class="col-4">
+            <legend>Mail Parent 1</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="mailParent1"
+              placeholder="Parent 1"
+            />
+          </div>
+          <div class="col-4"></div>
+          <div class="col-4">
+            <legend>Adresse Parent 1</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="adresseParent1"
+              placeholder="Adresse Parent 1"
+            />
+          </div>
+          <div class="col-4">
+            <legend>Code postal Parent 1</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="postalParent1"
+              placeholder="Code postal Parent 1"
+            />
+          </div>
+          <div class="col-4">
+            <legend>Ville Parent 1</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="villeParent1"
+              placeholder="Ville Parent 1"
+            />
+          </div>
+
+          <!-- parent 2 -->
+          <div class="col-12">
+            <p-divider align="left">
+              <div class="inline-flex align-items-center">
+                <b>Parent 2</b>
+              </div>
+            </p-divider>
+          </div>
+          <div class="col-4">
+            <legend>Parent 2</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="parent2"
+              placeholder="Parent 2"
+            />
+          </div>
+          <div class="col-4">
+            <legend>Mail Parent 2</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="mailParent2"
+              placeholder="Parent 2"
+            />
+          </div>
+          <div class="col-4"></div>
+          <div class="col-4">
+            <legend>Adresse Parent 2</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="adresseParent2"
+              placeholder="Adresse Parent 2"
+            />
+          </div>
+          <div class="col-4">
+            <legend>Code postal Parent 2</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="postalParent2"
+              placeholder="Code postal Parent 2"
+            />
+          </div>
+          <div class="col-4">
+            <legend>Ville Parent 2</legend>
+            <input
+              pInputText
+              type="text"
+              pSize="small"
+              formControlName="villeParent2"
+              placeholder="Ville Parent 2"
+            />
+          </div>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+
+
+  <ng-template pTemplate="footer">
+    <p-button class="mr-5"
+              styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:bg-blue-50"
+              (click)="onSubmit()">
+      <span class="text-xs text-blue-900 font-bold">Ajouter</span>
+    </p-button>
+    <p-button
+      styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
+      (click)="onCloseModal()">
+      <span class="text-xs text-blue-900 font-bold">Annuler</span>
+    </p-button>
+  </ng-template>
+</p-dialog>

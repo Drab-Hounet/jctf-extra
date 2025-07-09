@@ -35,7 +35,7 @@
       styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400	 hover:text-color "
       label="Création adhérent"
-      (click)="onOpenBasket()"
+      (click)="onOpenCreateAdherentModal()"
     ></p-button>
   </div>
 
@@ -51,6 +51,7 @@
   </div>
 </div>
 
+<app-modal-create-adherent [iOpenModal]="_isOpenCreateAdherentModal" (oNewAdherent)="onNewAdherent($event)"></app-modal-create-adherent>
 <app-modal-new-basket [iAdherents] ="_adherentsUser" (oNewAdherentBasket)="onNewAdherentBasket($event)"></app-modal-new-basket>
 <app-modal-basket *ngIf="_baskets" [iBaskets]=_baskets [iOpenModal]="_isOpenModal" (oDeleteBasket)="onDeleteBasket($event)" (oDeleteAllBasket)="onDeleteAllBasket($event)"></app-modal-basket>
 <app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>

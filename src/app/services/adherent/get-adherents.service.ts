@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {AdhesionService} from '../API/adhesion.service';
 import {catchError, Observable, of, switchMap} from 'rxjs';
-import {ResponseAdhesionApiModel} from '../../models/responseApiAdhesionModel';
 import {AdherentService} from '../API/adherent.service';
+import {ResponseAdherentApiModel} from '../../models/responseApiAdherentModel';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ export class GetAdherentsService {
   constructor(private adherentService: AdherentService) {
   }
 
-  getAdherents(authorization: string): Observable<ResponseAdhesionApiModel | null> {
+  getAdherents(authorization: string): Observable<ResponseAdherentApiModel | null> {
     return this.adherentService.getAdherents(authorization).pipe(
       switchMap(data => {
         return of(data);

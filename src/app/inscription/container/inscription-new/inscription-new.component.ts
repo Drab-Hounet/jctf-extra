@@ -24,6 +24,10 @@ import {ResponseAdherentApiModel} from '../../../models/responseApiAdherentModel
 import {DeleteBasketService} from '../../../services/basket/delete-basket.service';
 import {DeleteAllBasketsService} from '../../../services/basket/delete-all-baskets.service';
 import {GetAdherentsFreeService} from '../../../services/adherent/get-adherents-free.service';
+import {
+  ModalCreateAdherentComponent
+} from '../../../shared/component/modal-create-adherent/modal-create-adherent.component';
+import {CreateAdherentService} from '../../../services/adherent/create-adherent.service';
 
 @Component({
   selector: 'app-inscription-new',
@@ -32,6 +36,7 @@ import {GetAdherentsFreeService} from '../../../services/adherent/get-adherents-
     SpinnerComponent,
     ModalBasketComponent,
     ModalNewBasketComponent,
+    ModalCreateAdherentComponent,
     ToastModule,
     NgIf,
     Button,
@@ -52,6 +57,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   _adherentsUser: AdherentModel[] | null = null;
   _baskets: AdherentBasketModel[] = [];
   _isOpenModal = false;
+  _isOpenCreateAdherentModal = false;
 
   private _subscription: Subscription = new Subscription();
   private _getAdhesionDetails$: Subject<number> = new Subject();
@@ -60,6 +66,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   private _getAdherents$: Subject<boolean> = new Subject();
   private _deleteBasket$: Subject<number> = new Subject();
   private _deleteAllBaskets$: Subject<boolean> = new Subject();
+  private _createAdherent$: Subject<AdherentModel> = new Subject();
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -69,6 +76,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
               private createBasketService: CreateBasketService,
               private deleteBasketService: DeleteBasketService,
               private deleteAllBasketsService: DeleteAllBasketsService,
+              private createAdherentService: CreateAdherentService,
               private messageService: MessageService) {
   }
 
@@ -193,8 +201,8 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
           return this.deleteAllBasketsService.deleteAllBaskets(this._token);
         }),
         tap(data => {
+
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response) {
-            console.log(data);
             this.displayMessage('Le panier a bien été vidé', 'Succés', 'success');
             this._getBasket$.next(this._adhesion!.id);
           } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
@@ -206,6 +214,24 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
           }
         })).subscribe());
 
+    // create adherent
+    this._subscription.add(
+      this._createAdherent$.pipe(
+        switchMap(adherent => {
+          return this.createAdherentService.createAdherent(adherent, this._token);
+        }),
+        tap(data => {
+          this._spinner = false;
+          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response) {
+            this.displayMessage('Création adhérent réussi', 'Succés', 'success');
+          } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
+            this.displayMessage('Identification erronée', 'Erreur', 'error');
+            this.tokenUtilityClass.redirectToLogin().then(_ => {
+            });
+          } else {
+            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+          }
+        })).subscribe());
   }
 
   private fillAdherent(data: ResponseAdherentApiModel) {
@@ -253,6 +279,10 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
     this._getAdherents$.next(true);
   }
 
+  onOpenCreateAdherentModal() {
+    this._isOpenCreateAdherentModal = true;
+  }
+
   onDeleteBasket(baskeIdToDelete: number | null) {
     this._isOpenModal = false;
     if (baskeIdToDelete) {
@@ -272,6 +302,14 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
     if (newAdherentBasket) {
       this._spinner = true;
       this._createBasket$.next(newAdherentBasket);
+    }
+  }
+
+  onNewAdherent(newAdherent: AdherentModel | null) {
+    this._isOpenCreateAdherentModal = false;
+    if (newAdherent) {
+      this._spinner = true;
+      this._createAdherent$.next(newAdherent);
     }
   }
 

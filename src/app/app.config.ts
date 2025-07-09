@@ -7,6 +7,8 @@ import Aura from '@primeng/themes/aura';
 import {routes} from './Routes/app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {AuthGuard} from './Routes/AuthGards';
+import { fr } from "primelocale/fr.json"
+import customPreset from './custom.preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({eventCoalescing: true}),
@@ -14,10 +16,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAnimationsAsync(),
-    { provide: LOCALE_ID, useValue: 'fr' },
+    {provide: LOCALE_ID, useValue: 'fr'},
     providePrimeNG({
+      translation: fr,
       theme: {
-        preset: Aura,
+        preset: customPreset,
         options: {
           cssLayer: {
             name: 'primeng',
