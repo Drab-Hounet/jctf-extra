@@ -18,13 +18,14 @@
       <div class="grid">
         <div class="col-4">
           <legend>Nom*</legend>
-          <input pInputText formControlName="name" class="text-sm" type="text" pSize="small"/>
+          <input pInputText formControlName="name" class="text-sm w-full" type="text" pSize="small"/>
         </div>
 
         <div class="col-4">
           <legend>Prénom*</legend>
           <input
             pInputText
+            class="text-sm w-full"
             type="text"
             pSize="small"
             formControlName="surname"
@@ -58,7 +59,7 @@
           <legend>Adresse</legend>
           <input
             pInputText
-            type="text"
+            type="text" class="text-sm w-full"
             pSize="small"
             formControlName="adresse"
             placeholder="adresse"
@@ -69,7 +70,7 @@
           <legend>Code postal</legend>
           <input
             pInputText
-            type="text"
+            type="text" class="text-sm w-full"
             pSize="small"
             formControlName="codePostal"
             placeholder="code postal"
@@ -80,7 +81,7 @@
           <legend>Ville</legend>
           <input
             pInputText
-            type="text"
+            type="text" class="text-sm w-full"
             pSize="small"
             formControlName="ville"
             placeholder="ville"
@@ -91,7 +92,7 @@
           <legend>Téléphone*</legend>
           <input
             pInputText
-            type="text"
+            type="text" class="text-sm w-full"
             pSize="small"
             formControlName="phone"
             placeholder="Téléphone"
@@ -102,7 +103,7 @@
           <legend>Téléphone Fixe</legend>
           <input
             pInputText
-            type="text"
+            type="text" class="text-sm w-full"
             pSize="small"
             formControlName="phoneFixe"
             placeholder="Téléphone Fixe"
@@ -113,7 +114,7 @@
           <legend>Téléphone Bureau</legend>
           <input
             pInputText
-            type="text"
+            type="text" class="text-sm w-full"
             pSize="small"
             formControlName="phoneOffice"
             placeholder="Téléphone Bureau"
@@ -125,7 +126,7 @@
           <input
             pInputText
             name="mail"
-            type="text"
+            type="text" class="text-sm w-full"
             pSize="small"
             formControlName="mail"
             placeholder="mail"
@@ -134,9 +135,10 @@
 
         <div class="col-4">
           <legend>Date d'anniversaire*</legend>
-          <div class="flex flex-col gap-1">
+          <div class="flex flex-col gap-1 w-full" >
             <p-datepicker
-              size="small"
+              size="small" class="text-sm w-full" styleClass="w-full"
+              placeholder="Date d'anniversaire"
               formControlName="birthDay" dateFormat="dd/mm/yy"
               (onInput)="onDateChange()"
               (onClose)="onDateChange()"
@@ -157,6 +159,7 @@
             <legend>Parent 1</legend>
             <input
               pInputText
+              class="text-sm w-full"
               type="text"
               pSize="small"
               formControlName="parent1"
@@ -167,6 +170,7 @@
             <legend>Mail Parent 1</legend>
             <input
               pInputText
+              class="text-sm w-full"
               type="text"
               pSize="small"
               formControlName="mailParent1"
@@ -178,6 +182,7 @@
             <legend>Adresse Parent 1</legend>
             <input
               pInputText
+              class="text-sm w-full"
               type="text"
               pSize="small"
               formControlName="adresseParent1"
@@ -188,6 +193,7 @@
             <legend>Code postal Parent 1</legend>
             <input
               pInputText
+              class="text-sm w-full"
               type="text"
               pSize="small"
               formControlName="postalParent1"
@@ -198,6 +204,7 @@
             <legend>Ville Parent 1</legend>
             <input
               pInputText
+              class="text-sm w-full"
               type="text"
               pSize="small"
               formControlName="villeParent1"
@@ -218,6 +225,7 @@
             <input
               pInputText
               type="text"
+              class="text-sm w-full"
               pSize="small"
               formControlName="parent2"
               placeholder="Parent 2"
@@ -228,6 +236,7 @@
             <input
               pInputText
               type="text"
+              class="text-sm w-full"
               pSize="small"
               formControlName="mailParent2"
               placeholder="Parent 2"
@@ -239,6 +248,7 @@
             <input
               pInputText
               type="text"
+              class="text-sm w-full"
               pSize="small"
               formControlName="adresseParent2"
               placeholder="Adresse Parent 2"
@@ -249,6 +259,7 @@
             <input
               pInputText
               type="text"
+              class="text-sm w-full"
               pSize="small"
               formControlName="postalParent2"
               placeholder="Code postal Parent 2"
@@ -259,6 +270,7 @@
             <input
               pInputText
               type="text"
+              class="text-sm w-full"
               pSize="small"
               formControlName="villeParent2"
               placeholder="Ville Parent 2"

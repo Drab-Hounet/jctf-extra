@@ -56,6 +56,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   _adhesion: AdhesionModel | null = null;
   _adherentsUser: AdherentModel[] | null = null;
   _baskets: AdherentBasketModel[] = [];
+  _basketAmountTotal: number = 0;
   _isOpenModal = false;
   _isOpenCreateAdherentModal = false;
 
@@ -110,6 +111,9 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
             this.tokenUtilityClass.redirectToLogin().then(_ => {
             });
           } else {
+            if (data)
+              console.log(data.stateApi)
+
             this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
           }
         })).subscribe());
@@ -201,7 +205,6 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
           return this.deleteAllBasketsService.deleteAllBaskets(this._token);
         }),
         tap(data => {
-
           if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response) {
             this.displayMessage('Le panier a bien été vidé', 'Succés', 'success');
             this._getBasket$.next(this._adhesion!.id);
@@ -252,12 +255,14 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   }
 
   fillAdherentBasket(adherentBaskets: AdherentBasketModel[]) {
+    this._basketAmountTotal = 0;
     if (this._adhesion?.beginYear) {
       let categoryClass = new CategoryClass();
       for (let adherent of adherentBaskets || []) {
+        this._basketAmountTotal = this._basketAmountTotal + (adherent.basketAmountDetails?.totalPayment ?? 0);
         if (adherent.birth && this._adhesion.beginYear) {
           let date: Date = new Date(adherent.birth);
-          adherent.category = categoryClass.getCategory(this._adhesion.beginYear - date.getFullYear())
+          adherent.category = categoryClass.getCategory(this._adhesion.beginYear - date.getFullYear());
         }
       }
       this._baskets = adherentBaskets;

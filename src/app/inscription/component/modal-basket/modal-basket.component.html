@@ -7,36 +7,98 @@
   [modal]="true"
 >
   <ng-template pTemplate="header">
-    <span class="text-color	text-xl font-bold">Panier : </span>
+    <span class="text-color	text-xl font-bold">Détail du panier</span>
   </ng-template>
 
-  <ng-container  *ngIf="_baskets?.length == 0;else notEmpty">
-  <div class="h-7rem">
-   <i class="text-sm">Votre panier est vide.</i>
-  </div>
+  <span class="text-surface-500 text-xl block mb-5">Total :
+    <span class="text-xl text-red-900 font-bold">{{ _totalPrice }} €</span>
+</span>
+
+  <span class="text-xl font-bold"> Total :</span>
+
+  <ng-container *ngIf="_baskets?.length == 0;else notEmpty">
+    <div class="h-7rem">
+      <i class="text-sm">Votre panier est vide.</i>
+    </div>
   </ng-container>
   <ng-template #notEmpty>
-    <div *ngFor="let basket of _baskets">
+    <div class="text-sm" *ngFor="let basket of _baskets">
       <div class="flex justify-content-between flex-wrap">
-        <div class="text-lg font-bold">
-          <span>{{ basket.name }} {{ basket.surname }}</span>
+        <div class="text-xl font-bold">
+          <span tooltipStyleClass="text-sm"
+                pTooltip="catégorie : {{ basket.category }}">{{ basket.name }} {{ basket.surname }}</span>
         </div>
-        <div class="align-content-end">
+        <div class="align-content-end bg-red-50">
           <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
                     (click)="onDeleteBasket(basket.idBasket)" styleClass="p-button-rounded p-button-text"/>
         </div>
       </div>
-      <div class="flex gap-2 mt-2">
+      <div class="flex gap-2 mt-1 ml-2">
         <label for="">Date de naissance : </label>
-        <span>{{ basket.birth  | date: 'fullDate' }} <i>(catégorie : {{ basket.category }})</i></span>
+        <span>{{ basket.birth  | date: 'fullDate' }} </span>
       </div>
 
-      <div class="flex gap-2 mt-2">
+      <div class="flex gap-2 mt-1 ml-2">
         <label for="">Activités : </label>
         <p-tag *ngIf="basket.judo" severity="info" value="Judo"/>
         <p-tag *ngIf="basket.jujitsu" severity="warn" value="Jujitsu"/>
         <p-tag *ngIf="basket.taiso" severity="danger" value="Taiso"/>
         <p-tag *ngIf="basket.jjb" severity="secondary" value="JJB"/>
+      </div>
+
+      <div class="bg-blue-50 border-solid border-1 border-blue-900 border-round-xl mt-1	">
+        <div class="grid">
+          <div class="col-6">
+            <div class="grid">
+              <div class="col-6">
+                <span class="w-full text-xs">Licence : </span>
+              </div>
+              <div class="col-6">
+                <span class="text-xs font-bold">{{ basket.basketAmountDetails?.licenceAmount }} €</span>
+              </div>
+            </div>
+
+            <div class="grid">
+              <div class="col-6">
+                <span class="w-full text-xs">Adhésion : </span>
+              </div>
+              <div class="col-6">
+                <span class="text-xs font-bold">{{ basket.basketAmountDetails?.adhesionAmount }} €</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div *ngIf="basket.basketAmountDetails?.reductionFamily !== 0" class="grid">
+              <div class="col-6">
+                <span class="w-full text-xs">Reduction famille : </span>
+              </div>
+              <div class="col-6">
+                <span class="text-xs font-bold text-green-700">- {{ basket.basketAmountDetails?.reductionFamily }}
+                  €</span>
+              </div>
+            </div>
+
+            <div *ngIf="basket.basketAmountDetails?.reductionActivity !== 0" class="grid">
+              <div class="col-6">
+                <span class="w-full text-xs">Seconde activité : </span>
+              </div>
+              <div class="col-6">
+                <span class="text-xs font-bold">{{ basket.basketAmountDetails?.reductionActivity }} €</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-offset-3">
+            <div class="grid">
+              <div class="col-6">
+                <span class="w-full text-sm">Total : </span>
+              </div>
+              <div class="col-6">
+                <span class="text-sm text-red-900 font-bold">{{ basket.basketAmountDetails?.totalPayment }} €</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <p-divider class="mt-5 mb-2"></p-divider>

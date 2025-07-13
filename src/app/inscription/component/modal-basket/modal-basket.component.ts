@@ -5,6 +5,7 @@ import {ButtonModule} from 'primeng/button';
 import {DatePipe, NgFor, NgIf} from '@angular/common';
 import {DividerModule} from 'primeng/divider';
 import {TagModule} from 'primeng/tag';
+import {TooltipModule} from 'primeng/tooltip';
 
 @Component({
   selector: 'app-modal-basket',
@@ -14,15 +15,16 @@ import {TagModule} from 'primeng/tag';
     NgIf,
     DividerModule,
     DatePipe,
-    TagModule
+    TagModule,
+    TooltipModule
   ], standalone: true,
   templateUrl: './modal-basket.component.html',
   styleUrl: './modal-basket.component.scss'
 })
 export class ModalBasketComponent {
   _visible = false;
-
   _baskets: AdherentBasketModel[] | null = null;
+  _totalPrice: number = 0;
 
   @Input()
   get iOpenModal(): boolean | null {
@@ -42,7 +44,7 @@ export class ModalBasketComponent {
 
   set iBaskets(baskets: AdherentBasketModel[] | null) {
     if (baskets) {
-      this._baskets = baskets;
+      this.fillBaskets(baskets);
     }
   }
 
@@ -51,6 +53,16 @@ export class ModalBasketComponent {
 
   @Output()
   oDeleteAllBasket: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+
+  fillBaskets(baskets: AdherentBasketModel[]) {
+    this._totalPrice = 0;
+    for (let basket of baskets) {
+      this._totalPrice = this._totalPrice + (basket.basketAmountDetails?.totalPayment ?? 0);
+    }
+    this._baskets = baskets;
+
+  }
 
   onDeleteBasket(idBasket: number) {
     this._visible = false;
