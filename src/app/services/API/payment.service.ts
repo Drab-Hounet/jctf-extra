@@ -58,7 +58,7 @@ export class PaymentService {
       headers = headers.set('Accept', httpHeaderAcceptSelected);
     }
 
-    return this.httpClient.request<ResponseApiCheckoutIntentModel>('post', `${this.basePath}/api/ext/paiement/${encodeURIComponent(String(idAdhesion))}`,
+    return this.httpClient.request<ResponseApiCheckoutIntentModel>('post', `${this.basePath}/api/ext/payment/${encodeURIComponent(String(idAdhesion))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,
