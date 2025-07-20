@@ -1,0 +1,164 @@
+<p-dialog
+  [(visible)]="_visible"
+  [style]="{ width: '90vw' }"
+  [maximizable]="true"
+  (onHide)="onCloseModal()"
+  [closeOnEscape]="false"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <span
+      class="text-color	text-xl font-bold">Ajout réduction pour {{ _adherentBasket.surname }} {{ _adherentBasket.name }}</span>
+  </ng-template>
+  <form [formGroup]="_form">
+    <div class="grid">
+      <div class="col-12">
+        <p-fieldset legend="Attention">
+          <div class="text-sm text-red-800 line-height-3 mt-2">
+            <p class="mt-1 text-justify">Merci de renseigner avec attention les codes et les montants des différentes
+              aides (TATTOO,
+              Pass'Sport, Pass'Région), ceux-ci doivent impérativement correspondre à l’adhérent concerné et au montant
+              disponible.</p>
+            <p class="mt-1 text-justify">En cas d’erreur de saisie ou de code non valide, l’adhésion ne pourra pas être
+              prise en compte et sera automatiquement annulée, sans possibilité de régularisation ultérieure.</p>
+            <p class="mt-1 text-justify">Nous vous invitons à vérifier soigneusement l’exactitude des informations avant
+              validation.</p>
+            <p class="mt-1 text-justify">Nous vous remercions pour votre vigilance et votre compréhension.</p>
+          </div>
+        </p-fieldset>
+
+        <div *ngIf="_isErrorForm" class="grid mt-3">
+          <div class="col-12 text-center">
+            <span class="text-red-900 text-sm font-bold ">Merci de vérifier que tous les champs du formulaire sont bien complétés.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARTE TATTOO-->
+
+      <div class="col-12">
+        <h5>Carte Tattoo</h5>
+      </div>
+      <div class="col-1 mt-3">
+        <p-checkbox size="small" (onChange)="onSelectCarteTattoo()" formControlName="isCarteTattoo" [binary]="true"/>
+      </div>
+
+      <div class="col-6">
+        <legend class="text-sm">Code</legend>
+        <input
+          pInputText
+          name="carteTattoo"
+          type="text" class="text-sm w-full"
+          pSize="small"
+          formControlName="codeTattoo"
+          placeholder="code carte tattoo"
+        />
+      </div>
+      <div class="col-5">
+        <legend class="text-sm">Montant</legend>
+        <p-inputnumber
+          size="small"
+          class="w-full"
+          suffix=" €"
+          formControlName="amountTattoo"
+          inputId="amountTattoo" [minFractionDigits]="0"
+          placeholder="montant carte tattoo (max 60€)"
+        />
+      </div>
+
+      <p-divider class="m-3"/>
+
+      <!-- CARTE Pass'Sport-->
+
+      <div class="col-12">
+        <h5>Carte Pass'Sport</h5>
+      </div>
+      <div class="col-1 mt-3">
+        <p-checkbox size="small" (onChange)="onSelectCartePassSport()" formControlName="isCartePassSport"
+                    [binary]="true"/>
+      </div>
+
+      <div class="col-6">
+        <legend class="text-sm">Code</legend>
+        <input
+          pInputText
+          name="cartePassSport"
+          type="text" class="text-sm w-full"
+          pSize="small"
+          formControlName="codePassSport"
+          placeholder="code carte pass'Sport"
+        />
+      </div>
+      <div class="col-5">
+        <legend class="text-sm">Montant</legend>
+        <p-inputnumber
+          size="small"
+          class="w-full"
+          suffix=" €"
+          formControlName="amountPassSport"
+          inputId="amountPassSport" [minFractionDigits]="0"
+          placeholder="montant carte pass'Sport"
+        />
+      </div>
+
+      <p-divider class="m-3"/>
+
+      <!-- CARTE Pass'Region-->
+      <div class="col-12">
+        <h5>Carte Pass'Region</h5>
+      </div>
+      <div class="col-1 mt-3">
+        <p-checkbox size="small" (onChange)="onSelectCartePassRegion()" formControlName="isCartePassRegion"
+                    [binary]="true"/>
+      </div>
+      <div class="col-6">
+        <legend class="text-sm">Code</legend>
+        <input
+          pInputText
+          name="cartePassRegion"
+          type="text" class="text-sm w-full"
+          pSize="small"
+          formControlName="codePassRegion"
+          placeholder="code carte pass'Region"
+        />
+      </div>
+      <div class="col-5">
+        <legend class="text-sm">Montant</legend>
+        <p-inputnumber
+          size="small"
+          class="w-full"
+          suffix=" €"
+          formControlName="amountPassRegion"
+          inputId="amountPassRegion" [minFractionDigits]="0"
+          placeholder="montant carte pass'Region"
+        />
+      </div>
+      <div class="col-6 col-offset-1">
+        <legend class="text-sm">Code Pin</legend>
+        <input
+          pInputText
+          name="pinPassRegion"
+          type="text" class="text-sm w-full"
+          pSize="small"
+          formControlName="pinPassRegion"
+          placeholder="pin carte pass'Region"
+        />
+      </div>
+    </div>
+  </form>
+
+
+  <ng-template pTemplate="footer">
+    <p-button
+      class="mr-5"
+      styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:bg-blue-50"
+      (click)="onSubmit()">
+      <span class="text-xs text-blue-900 font-bold">Valider</span>
+    </p-button>
+    <p-button
+      styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
+      (click)="onCloseModal()">
+      <span class="text-xs text-blue-900 font-bold">Fermer</span>
+    </p-button>
+  </ng-template>
+</p-dialog>

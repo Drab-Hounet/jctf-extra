@@ -112,9 +112,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
             });
           } else {
             if (data)
-              console.log(data.stateApi)
-
-            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+              this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
           }
         })).subscribe());
 
@@ -282,6 +280,17 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   onOpenNewInscription() {
     this._spinner = true;
     this._getAdherents$.next(true);
+  }
+
+  onOpenPaiement() {
+    if (this._adhesion?.id) {
+      this.router.navigate(['inscription', 'payment', this._adhesion.id]).then(_ => {
+      });
+    }
+  }
+
+  onPaiementBasket(state: boolean) {
+    this.onOpenPaiement();
   }
 
   onOpenCreateAdherentModal() {

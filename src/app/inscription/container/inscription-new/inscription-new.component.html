@@ -59,6 +59,17 @@
       (click)="onOpenNewInscription()"
     ></p-button>
   </div>
+
+  <div class="col-4 col-offset-4 mt-3">
+    <p-button
+      icon="pi pi-fw pi-credit-card"
+      pTooltip="Inscription d'un nouvel adhérent sur la saison" tooltipPosition="right"
+      styleClass="w-full bg-white border-900 text-color text-sm
+        hover:bg-white hover:border-400	 hover:text-color "
+      label="Paiement"
+      (click)="onOpenPaiement()"
+    ></p-button>
+  </div>
 </div>
 
 <app-modal-create-adherent [iOpenModal]="_isOpenCreateAdherentModal"
@@ -67,6 +78,7 @@
                       (oNewAdherentBasket)="onNewAdherentBasket($event)"></app-modal-new-basket>
 <app-modal-basket *ngIf="_baskets" [iBaskets]=_baskets [iOpenModal]="_isOpenModal"
                   (oDeleteBasket)="onDeleteBasket($event)"
-                  (oDeleteAllBasket)="onDeleteAllBasket($event)"></app-modal-basket>
+                  (oDeleteAllBasket)="onDeleteAllBasket($event)"
+                  (oPaiementBasket)="onPaiementBasket($event)"></app-modal-basket>
 <app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
 <p-toast></p-toast>

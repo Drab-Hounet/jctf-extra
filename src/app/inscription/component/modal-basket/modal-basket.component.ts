@@ -49,6 +49,9 @@ export class ModalBasketComponent {
   }
 
   @Output()
+  oPaiementBasket: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Output()
   oDeleteBasket: EventEmitter<number | null> = new EventEmitter<number | null>();
 
   @Output()
@@ -59,9 +62,11 @@ export class ModalBasketComponent {
     this._totalPrice = 0;
     for (let basket of baskets) {
       this._totalPrice = this._totalPrice + (basket.basketAmountDetails?.totalPayment ?? 0);
+      if (basket.basketAmountDetails) {
+        basket.basketAmountDetails.totalReduction = basket.basketAmountDetails?.tattooAmount + basket.basketAmountDetails?.passSportAmount + basket.basketAmountDetails?.passRegionAmount;
+      }
     }
     this._baskets = baskets;
-
   }
 
   onDeleteBasket(idBasket: number) {
@@ -75,7 +80,7 @@ export class ModalBasketComponent {
   }
 
   onPaiement() {
-
+    this.oPaiementBasket.emit(true);
   }
 
   onCloseModal() {

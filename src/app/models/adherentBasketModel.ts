@@ -12,5 +12,15 @@ export interface BasketAmountDetailsModel {
   reductionActivity: number;
   reductionFamily: number;
 
+  tattooCode: string;
+  tattooAmount: number;
+  passSportCode: string;
+  passSportAmount: number;
+  passRegionCode: string;
+  passRegionPin:string;
+  passRegionAmount: number;
+
+  totalReduction: number;
+
   totalPayment: number;
 }

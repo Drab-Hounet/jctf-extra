@@ -1,0 +1,152 @@
+<app-header [iPseudo]="_pseudo"></app-header>
+<div class="grid mt-3">
+  <div class="col-6">
+    <div
+      class="w-full border-round-md border-solid border-1	shadow-6 bg-blue-900 gap-2 cursor-pointer h-8rem"
+      (click)="onRedirect()">
+      <div *ngIf="_adhesion" class="text-50">
+        <div class="grid">
+          <div class="col-6">
+            <p class="text-2xl font-bold"> {{ _adhesion.beginYear }} - {{ _adhesion.endYear }} </p>
+          </div>
+          <div class="col-12">
+            <p class="text-xs	align-content-end h-4rem">
+              Nombre d'adhérents : {{ _adhesion.numberAdherent }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div
+      class="w-full border-round-md border-solid border-1	border-blue-900 shadow-6 bg-surface gap-2 cursor-pointer h-8rem">
+      <div *ngIf="_adhesion" class="text-blue-900">
+        <div class="grid">
+          <div class="col-6">
+            <p class="text-2xl font-bold">Panier </p>
+          </div>
+          <div class="col-6">
+            <p class="text-sm text-red-900 text-right font-bold h-1rem">{{ _basketAmountTotal }} €</p>
+          </div>
+        </div>
+        <div class="col-12">
+          <p class="text-xs	align-content-end h-4rem"> Nombre d'adhérents : {{ _baskets.length }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 mt-3">
+    <ng-container *ngIf="_baskets?.length == 0;else notEmpty">
+      <div class="h-7rem">
+        <i class="text-sm">Votre panier est vide.</i>
+      </div>
+    </ng-container>
+    <ng-template #notEmpty>
+      <div class="text-sm" *ngFor="let basket of _baskets">
+        <div class="flex justify-content-between flex-wrap">
+          <div class="text-xl font-bold">
+          <span tooltipStyleClass="text-sm"
+                pTooltip="catégorie : {{ basket.category }}">{{ basket.name }} {{ basket.surname }}</span>
+          </div>
+          <div class="align-content-end">
+            <p-button icon="pi pi-sparkles" [rounded]="true" [text]="true" severity="success" label="Réductions ?"
+                      (click)="onAddReduction(basket)" styleClass="p-button-rounded p-button-text"/>
+          </div>
+        </div>
+        <div class="flex gap-2 mt-1 ml-2">
+          <label for="">Date de naissance : </label>
+          <span>{{ basket.birth  | date: 'fullDate' }} </span>
+        </div>
+
+        <div class="flex gap-2 mt-1 ml-2">
+          <label for="">Activités : </label>
+          <p-tag *ngIf="basket.judo" severity="info" value="Judo"/>
+          <p-tag *ngIf="basket.jujitsu" severity="warn" value="Jujitsu"/>
+          <p-tag *ngIf="basket.taiso" severity="danger" value="Taiso"/>
+          <p-tag *ngIf="basket.jjb" severity="secondary" value="JJB"/>
+        </div>
+
+        <div class="bg-blue-50 border-solid border-1 border-blue-900 border-round-xl mt-1	">
+          <div class="grid">
+            <div class="col-6">
+              <div class="grid">
+                <div class="col-6">
+                  <span class="w-full text-xs">Licence : </span>
+                </div>
+                <div class="col-6">
+                  <span class="text-xs font-bold">{{ basket.basketAmountDetails?.licenceAmount }} €</span>
+                </div>
+              </div>
+
+              <div class="grid">
+                <div class="col-6">
+                  <span class="w-full text-xs">Adhésion : </span>
+                </div>
+                <div class="col-6">
+                  <span class="text-xs font-bold">{{ basket.basketAmountDetails?.adhesionAmount }} €</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div *ngIf="basket.basketAmountDetails?.reductionFamily !== 0" class="grid">
+                <div class="col-6">
+                  <span class="w-full text-xs">Reduction famille : </span>
+                </div>
+                <div class="col-6">
+                <span class="text-xs font-bold text-green-700">- {{ basket.basketAmountDetails?.reductionFamily }}
+                  €</span>
+                </div>
+              </div>
+
+              <div *ngIf="basket.basketAmountDetails?.reductionActivity !== 0" class="grid">
+                <div class="col-6">
+                  <span class="w-full text-xs">Seconde activité : </span>
+                </div>
+                <div class="col-6">
+                  <span class="text-xs font-bold">{{ basket.basketAmountDetails?.reductionActivity }} €</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div *ngIf="basket.basketAmountDetails?.totalReduction !== 0" class="grid">
+                <div class="col-6">
+                  <span class="w-full text-xs">Réductions (carte tattoo, pass'Sport, pass'Region) : </span>
+                </div>
+                <div class="col-6">
+                  <span class="text-xs font-bold text-green-700">- {{ basket.basketAmountDetails?.totalReduction }}
+                    €</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-offset-3">
+              <div class="grid">
+                <div class="col-6">
+                  <span class="w-full text-sm">Total : </span>
+                </div>
+                <div class="col-6">
+                  <span class="text-sm text-red-900 font-bold">{{ basket.basketAmountDetails?.totalPayment }} €</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p-divider class="mt-5 mb-2"></p-divider>
+      </div>
+
+      <div class="col-6 col-offset-3 mt-3">
+      <app-button-hello-asso (oPayAction)="onPayAction($event)"></app-button-hello-asso>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+<app-modal-basket-reduction [iAdherentBasket]="_basketSelected"
+                            (oBasketReduction)="onBasketReduction($event)"></app-modal-basket-reduction>
+<app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
+<p-toast></p-toast>

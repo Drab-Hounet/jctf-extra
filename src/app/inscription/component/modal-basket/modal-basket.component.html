@@ -14,8 +14,6 @@
     <span class="text-xl text-red-900 font-bold">{{ _totalPrice }} €</span>
 </span>
 
-  <span class="text-xl font-bold"> Total :</span>
-
   <ng-container *ngIf="_baskets?.length == 0;else notEmpty">
     <div class="h-7rem">
       <i class="text-sm">Votre panier est vide.</i>
@@ -28,7 +26,7 @@
           <span tooltipStyleClass="text-sm"
                 pTooltip="catégorie : {{ basket.category }}">{{ basket.name }} {{ basket.surname }}</span>
         </div>
-        <div class="align-content-end bg-red-50">
+        <div class="align-content-end">
           <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
                     (click)="onDeleteBasket(basket.idBasket)" styleClass="p-button-rounded p-button-text"/>
         </div>
@@ -88,6 +86,18 @@
               </div>
             </div>
           </div>
+
+          <div class="col-12">
+            <div *ngIf="basket.basketAmountDetails?.totalReduction !== 0" class="grid">
+              <div class="col-8">
+                <span class="w-full text-xs">Réductions (carte tattoo, pass'Sport, pass'Region) : </span>
+              </div>
+              <div class="col-4">
+                <span class="text-xs font-bold text-green-700">- {{ basket.basketAmountDetails?.totalReduction }} €</span>
+              </div>
+            </div>
+          </div>
+
           <div class="col-6 col-offset-3">
             <div class="grid">
               <div class="col-6">
