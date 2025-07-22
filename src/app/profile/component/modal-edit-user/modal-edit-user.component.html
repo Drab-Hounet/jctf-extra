@@ -1,0 +1,87 @@
+<p-dialog
+  [(visible)]="_visible"
+  [style]="{ width: '80vw' }"
+  [maximizable]="true"
+  (onHide)="onCloseModal()"
+  [closeOnEscape]="false"
+  [modal]="true"
+>
+  <ng-template pTemplate="header">
+    <span class="text-color	text-xl font-bold">Edition du profil</span>
+  </ng-template>
+
+  <form [formGroup]="_form">
+    <div class="grid">
+      <div class="col-12">
+        <legend class="text-sm">Nom</legend>
+        <input
+          pInputText
+          name="nom"
+          type="text" class="text-sm w-full"
+          pSize="small"
+          formControlName="name"
+          placeholder="nom de l'utilisateur"
+        />
+      </div>
+
+      <div class="col-12">
+        <legend class="text-sm">Prénom</legend>
+        <input
+          pInputText
+          name="surname"
+          type="text" class="text-sm w-full"
+          pSize="small"
+          formControlName="surname"
+          placeholder="prénom de l'utilisateur"
+        />
+      </div>
+
+      <div class="col-12">
+        <legend class="text-sm">Téléphone</legend>
+        <input
+          pInputText
+          name="phone"
+          type="text" class="text-sm w-full"
+          pSize="small"
+          formControlName="phone"
+          placeholder="téléphone"
+        />
+      </div>
+
+      <p-divider class="mt-2 mb-2"></p-divider>
+
+      <div class="col-6">
+        <legend class="text-sm">Password</legend>
+        <p-password
+          [feedback]="false"
+          class="text-xs"
+          size="small"
+          formControlName="password"/>
+      </div>
+
+      <div class="col-6">
+        <legend class="text-sm">Répéter le Password</legend>
+        <p-password
+          size="small"
+          [feedback]="false"
+          formControlName="rePassword"/>
+      </div>
+    </div>
+  </form>
+
+  <span *ngIf="_isError" class="text-red-900 text-sm font-italic">Attention tous les champs obligatoires ne sont pas remplis.</span>
+
+
+  <ng-template pTemplate="footer">
+    <p-button
+      styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
+      (click)="onSubmit()">
+      <span class="text-xs text-blue-900 font-bold">Valider</span>
+    </p-button>
+    <p-button
+      styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:surface-ground	"
+      (click)="onCloseModal()">
+      <span class="text-xs text-blue-900 font-bold">Annuler</span>
+    </p-button>
+  </ng-template>
+</p-dialog>

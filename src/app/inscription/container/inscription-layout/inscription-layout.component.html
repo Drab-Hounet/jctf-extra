@@ -1,5 +1,8 @@
-<app-header [iPseudo]="_pseudo"></app-header>
-<div class="m-5">
+<div class="sticky top-0">
+  <app-header [iPseudo]="_pseudo" [iInscriptionSelected]=true [iProfilSelected]="false"></app-header>
+</div>
+
+<div class="m-5 ">
   <p-card class="w-full shadow-1 min-h-screen" styleClass="bg-blue-50" header="Inscriptions Actives" subheader="">
     <div class="grid ml-3">
       <div *ngFor="let adhesion of _listAdhesionsActive">
@@ -20,9 +23,10 @@
       <i *ngIf="_listAdhesionsActive.length == 0">Aucune adhésion est actuellement ouverte aux inscriptions.</i>
     </div>
   </p-card>
+
+  <ng-container *ngIf="_adhesionDetails">
+    <app-inscription-details [iAdhesionDetails]="_adhesionDetails"></app-inscription-details>
+  </ng-container>
 </div>
-<ng-container *ngIf="_adhesionDetails">
-  <app-inscription-details [iAdhesionDetails]="_adhesionDetails"></app-inscription-details>
-</ng-container>
 <app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
 <p-toast></p-toast>

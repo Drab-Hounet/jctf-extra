@@ -1,6 +1,56 @@
 <div class="m-3">
-  <p-card class="w-full shadow-1 min-h-screen		" styleClass="bg-blue-50" header="Profils" subheader="">
+  <p-card class="w-full shadow-1 min-h-screen" styleClass="bg-blue-50" subheader="">
+    <ng-template #title>
+      <div class="grid">
+        <div class="col-11 mt-2">
+          Profils
+        </div>
+        <div class="col-1">
+          <p-button icon="pi pi-user-edit" pTooltip="Edition du profil" tooltipPosition="left" [rounded]="true" [text]="true" severity="success"
+              (click)="onEditProfil()"      styleClass="p-button-rounded p-button-text"/>
+        </div>
+      </div>
+    </ng-template>
+
     <div class="grid">
+      <div class="col-6">
+        <div class="grid">
+          <div class="col-6">
+            <label for="">Nom : </label>
+          </div>
+          <div class="col-6">
+            <span>{{ _userDetails?.name |uppercase }} </span>
+          </div>
+          <div class="col-6">
+            <label for="">Téléphone : </label>
+          </div>
+          <div class="col-6">
+            <span>{{ _userDetails?.phone }}</span>
+          </div>
+        </div>
+      </div>
+
+      <p-divider layout="vertical"/>
+
+      <div class="col-6">
+        <div class="grid">
+          <div class="col-6">
+            <label for="">Prénom : </label>
+          </div>
+          <div class="col-6">
+            <span>{{ _userDetails?.surname }}</span>
+          </div>
+          <div class="col-6">
+            <label for="">Mail : </label>
+          </div>
+          <div class="col-6">
+            <span>{{ _userDetails?.mail }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </p-card>
 </div>
+
+<app-modal-edit-user [iUser]="_userToEdit" (oUserEdit)="onUserEdit($event)"></app-modal-edit-user>
+<p-toast></p-toast>

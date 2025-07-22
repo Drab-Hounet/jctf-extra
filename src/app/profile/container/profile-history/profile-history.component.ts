@@ -112,7 +112,6 @@ export class ProfileHistoryComponent implements OnInit, OnDestroy, AfterViewInit
   getInformationToken(): void {
     this.tokenUtilityClass.getInformationToken();
     this._token = this.tokenUtilityClass._token;
-    //this._pseudo = this.tokenUtilityClass._pseudo;
   }
 
   displayMessage(message: string, summary: string, type: string) {

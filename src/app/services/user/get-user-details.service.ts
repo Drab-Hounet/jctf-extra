@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import {AuthUserService} from '../API/auth-user.service';
+import {Injectable} from '@angular/core';
 import {catchError, Observable, of, switchMap} from 'rxjs';
+import {UserService} from '../API/user.service';
 import {ResponseUserApiModel} from '../../models/responseApiUserModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecoveryPasswordMailService {
+export class GetUserDetailsService {
 
-  constructor(private authService: AuthUserService) {
+  constructor(private userService: UserService) {
   }
 
-  recoveryPasswordMail(mail: string): Observable<ResponseUserApiModel | null> {
-    return this.authService.recoveryPassword(mail).pipe(
+  getUserDetails(authorization: string): Observable<ResponseUserApiModel | null> {
+    return this.userService.getUser(authorization).pipe(
       switchMap(data => {
         return of(data);
       }),

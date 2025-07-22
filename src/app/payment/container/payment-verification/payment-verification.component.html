@@ -1,0 +1,32 @@
+<div class="sticky top-0">
+  <app-header [iPseudo]="_pseudo" [iInscriptionSelected]=true [iProfilSelected]="false"></app-header>
+</div>
+<div class="grid">
+  <div class="col-12">
+    <p-fieldset styleClass="h-8rem" legend="Verification en cours ... ">
+      <ng-container [ngSwitch]="_statePayment">
+        <p *ngSwitchCase="_IN_PROGRESS_STATUS" class="m-3 text-sm text-center text-blue-800">
+          Traitement de votre paiement. Veuillez patienter...
+        </p>
+        <p *ngSwitchCase="_SUCCESS_STATUS" class="m-3 text-sm text-center text-green-700">
+          Paiement validé avec succès. Merci !
+        </p>
+        <p *ngSwitchDefault class="m-3 text-sm text-center text-red-700">
+          Une erreur est survenue lors du traitement du paiement.
+        </p>
+      </ng-container>
+    </p-fieldset>
+
+    <div class="col-3 col-offset-4">
+      <p-button
+        class="mr-5"
+        styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:bg-blue-50"
+        (click)="onSubmit()">
+        <span class="text-xs text-blue-900 font-bold">Retour</span>
+      </p-button>
+    </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="_spinner" [iIsOpen]=_spinner></app-spinner>
+<p-toast></p-toast>

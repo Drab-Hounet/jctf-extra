@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../../shared/component/header/header.component';
 import {TokenUtilityClass} from '../../../shared/Utils/tokenUtilityClass';
 import {Router} from '@angular/router';

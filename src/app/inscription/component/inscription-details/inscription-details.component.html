@@ -4,7 +4,8 @@
     <h4 class="mb-5">Listes des adhérents avec paiement à jour :</h4>
     <i *ngIf="_adhesionDetails?.listAdherent?.length == 0">Aucun adhérent trouvé</i>
     <div *ngFor="let adherent of _adhesionDetails?.listAdherent">
-      <div class="mt-5 mb-2 border-solid border-left-3 border-top-none border-bottom-none border-right-none pl-2 border-blue-800">
+      <div
+        class="mt-5 mb-2 border-solid border-left-3 border-top-none border-bottom-none border-right-none pl-2 border-blue-800">
         <div class="text-lg font-bold">
           <span>{{ adherent.name }} {{ adherent.surname }}</span>
         </div>
@@ -28,7 +29,8 @@
     <h4 class="mb-5">Listes des adhérents à régulariser :</h4>
     <i *ngIf="_adhesionDetails?.listAdherentBasket?.length == 0">Aucun adhérent trouvé</i>
     <div *ngFor="let adherent of _adhesionDetails?.listAdherentBasket">
-      <div class="mt-5 mb-2 border-solid border-left-3 border-top-none border-bottom-none border-right-none pl-2 border-blue-800">
+      <div
+        class="mt-5 mb-2 border-solid border-left-3 border-top-none border-bottom-none border-right-none pl-2 border-blue-800">
         <div class="text-lg font-bold">
           <span>{{ adherent.name }} {{ adherent.surname }}</span>
         </div>

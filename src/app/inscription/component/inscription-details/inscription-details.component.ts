@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {AdhesionModel} from '../../../models/adhesionModel';
 import {DatePipe, NgFor, NgIf} from '@angular/common';
 import {Card} from 'primeng/card';
-import {Divider} from 'primeng/divider';
 import {Tag} from 'primeng/tag';
 import {Button} from 'primeng/button';
 import {Router} from '@angular/router';
@@ -14,7 +13,6 @@ import {Router} from '@angular/router';
     NgIf,
     Card,
     DatePipe,
-    Divider,
     Tag,
     Button
   ],
@@ -42,7 +40,8 @@ export class InscriptionDetailsComponent {
 
   onNewInscrition() {
     if (this._adhesionDetails) {
-      this.router.navigate(['inscription', 'new', this._adhesionDetails.id]).then(_ =>{} );
+      this.router.navigate(['inscription', 'new', this._adhesionDetails.id]).then(_ => {
+      });
     }
   }
 }

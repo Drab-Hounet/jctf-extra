@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AuthUserService} from '../API/auth-user.service';
 import {catchError, Observable, of, switchMap} from 'rxjs';
-import {ResponseUserApiModel} from '../../models/responseApiUser';
+import {ResponseUserApiModel} from '../../models/responseApiUserModel';
 import {UserModel} from '../../models/userModel';
 
 @Injectable({

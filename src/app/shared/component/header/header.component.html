@@ -1,20 +1,40 @@
 <div class="w-full bg-blue-50 border-900 shadow-1	 ">
   <div class="grid">
     <div class="col-2">
+      <ng-container *ngIf="_isInscriptionSelected;else profilNotSelected">
       <p-button
         styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400	 hover:text-color "
         label="Profils"
         (click)="navigateTo('profile')"
       ></p-button>
+      </ng-container>
+      <ng-template #profilNotSelected>
+        <p-button
+          styleClass="w-full bg-blue-900 border-900 text-white text-sm
+        hover:bg-blue-800 hover:border-900 hover:text-white"
+          label="Profils"
+          (click)="navigateTo('profile')"
+        ></p-button>
+      </ng-template>
     </div>
     <div class="col-2">
-      <p-button
-        styleClass="w-full bg-white border-900 text-color text-sm
+      <ng-container *ngIf="_isInscriptionSelected;else inscriptionNotSelected">
+        <p-button
+          styleClass="w-full bg-blue-900 border-900 text-white text-sm
+        hover:bg-blue-800 hover:border-900 hover:text-white"
+          label="Inscription"
+          (click)="navigateTo('inscription')"
+        ></p-button>
+      </ng-container>
+      <ng-template #inscriptionNotSelected>
+        <p-button
+          styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400 hover:text-color"
-        label="Inscription"
-        (click)="navigateTo('inscription')"
-      ></p-button>
+          label="Inscription"
+          (click)="navigateTo('inscription')"
+        ></p-button>
+      </ng-template>
     </div>
     <div class="col-2 col-offset-6">
       <p-button
