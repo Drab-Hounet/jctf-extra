@@ -5,6 +5,8 @@ import {Configuration} from '../configuration';
 import {BASE_PATH} from '../variables';
 import {Observable} from 'rxjs';
 import {ResponseApiCheckoutIntentModel} from '../../models/responseApiCheckoutIntentModel';
+import {PaymentStatusModel} from '../../models/PaymentStatusModel';
+import {responseApiCheckoutIntentValidationModel} from '../../models/responseApiCheckoutIntentValidationModel';
 
 @Injectable({
   providedIn: 'root'
@@ -67,4 +69,61 @@ export class PaymentService {
       }
     );
   }
+
+  /**
+   * RÃŠcupÃŠre le lien pour effectuer le paiement
+   *
+   * @param body
+   * @param authorization
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public setCheckoutIntent(body: PaymentStatusModel, authorization: string, observe?: 'body', reportProgress?: boolean): Observable<responseApiCheckoutIntentValidationModel>;
+  public setCheckoutIntent(body: PaymentStatusModel, authorization: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<responseApiCheckoutIntentValidationModel>>;
+  public setCheckoutIntent(body: PaymentStatusModel, authorization: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<responseApiCheckoutIntentValidationModel>>;
+  public setCheckoutIntent(body: PaymentStatusModel, authorization: string, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
+    if (body === null || body === undefined) {
+      throw new Error('Required parameter body was null or undefined when calling setCheckoutIntent.');
+    }
+
+    if (authorization === null || authorization === undefined) {
+      throw new Error('Required parameter authorization was null or undefined when calling setCheckoutIntent.');
+    }
+
+    let headers = this.defaultHeaders;
+    if (authorization !== undefined && authorization !== null) {
+      headers = headers.set('Authorization', String(authorization));
+    }
+
+    // to determine the Accept header
+    let httpHeaderAccepts: string[] = [
+      '*/*'
+    ];
+    const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+    if (httpHeaderAcceptSelected != undefined) {
+      headers = headers.set('Accept', httpHeaderAcceptSelected);
+    }
+
+    // to determine the Content-Type header
+    const consumes: string[] = [
+      'application/json'
+    ];
+    const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+    if (httpContentTypeSelected != undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected);
+    }
+
+    return this.httpClient.request<responseApiCheckoutIntentValidationModel>('put', `${this.basePath}/api/ext/payment`,
+      {
+        body: body,
+        withCredentials: this.configuration.withCredentials,
+        headers: headers,
+        observe: observe,
+        reportProgress: reportProgress
+      }
+    );
+  }
+
+
 }

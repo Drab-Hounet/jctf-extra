@@ -52,7 +52,6 @@ export class PaymentLayoutComponent implements OnInit, OnDestroy {
   _pseudo!: string;
   _spinner: boolean = false;
 
-
   _adhesion: AdhesionModel | null = null;
   _basketSelected: AdherentBasketModel | null = null;
   _baskets: AdherentBasketModel[] = [];

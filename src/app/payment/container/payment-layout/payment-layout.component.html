@@ -1,5 +1,9 @@
 <app-header [iPseudo]="_pseudo"></app-header>
 <div class="grid mt-3">
+  <div class="col-12">
+    <h2>Récapitulatif de votre panier :</h2>
+  </div>
+
   <div class="col-6">
     <div
       class="w-full border-round-md border-solid border-1	shadow-6 bg-blue-900 gap-2 cursor-pointer h-8rem"
@@ -139,8 +143,8 @@
         <p-divider class="mt-5 mb-2"></p-divider>
       </div>
 
-      <div class="col-6 col-offset-3 mt-3">
-      <app-button-hello-asso (oPayAction)="onPayAction($event)"></app-button-hello-asso>
+      <div class="col-6 col-offset-4 mt-3">
+        <app-button-hello-asso (oPayAction)="onPayAction($event)"></app-button-hello-asso>
       </div>
     </ng-template>
 

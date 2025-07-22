@@ -1,7 +1,7 @@
 <app-header [iPseudo]="_pseudo"></app-header>
 <div class="grid mt-3">
   <div class="col-6">
-    <div
+    <div pTooltip="Retour"
       class="w-full border-round-md border-solid border-1	shadow-6 bg-blue-900 gap-2 cursor-pointer h-8rem"
       (click)="onRedirect()">
       <div *ngIf="_adhesion" class="text-50">
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="col-6">
-    <div
+    <div pTooltip="Détails de votre panier"
       class="w-full border-round-md border-solid border-1	border-blue-900 shadow-6 bg-surface gap-2 cursor-pointer h-8rem"
       (click)="onOpenBasket()">
       <div *ngIf="_adhesion" class="text-blue-900">
@@ -63,7 +63,7 @@
   <div class="col-4 col-offset-4 mt-3">
     <p-button
       icon="pi pi-fw pi-credit-card"
-      pTooltip="Inscription d'un nouvel adhérent sur la saison" tooltipPosition="right"
+      pTooltip="Paiement de votre adhésion" tooltipPosition="right"
       styleClass="w-full bg-white border-900 text-color text-sm
         hover:bg-white hover:border-400	 hover:text-color "
       label="Paiement"
