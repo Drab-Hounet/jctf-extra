@@ -4,7 +4,7 @@ import {MessageService} from 'primeng/api';
 import {TokenUtilityClass} from '../../../shared/Utils/tokenUtilityClass';
 import {Subject, Subscription, switchMap, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {GetAllAdhesionsService} from '../../../services/adhesion/get-all-adhesions.service';
+import {CheckboxModule} from 'primeng/checkbox';
 import {GetAdhesionDetailsService} from '../../../services/adhesion/get-adhesion-details.service';
 import {StateApiModel} from '../../../models/stateApiModel';
 import {AdhesionModel} from '../../../models/adhesionModel';
@@ -23,6 +23,7 @@ import {UpdateBasketAdherentService} from '../../../services/basket/update-baske
 import {ButtonHelloAssoComponent} from '../../component/button-hello-asso/button-hello-asso.component';
 import {GetCheckoutIntentService} from '../../../services/checkoutIntent/get-checkout-intent.service';
 import {ResponseCheckoutIntentModel} from '../../../models/responseCheckoutIntentModel';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-payment-layout',
@@ -38,7 +39,9 @@ import {ResponseCheckoutIntentModel} from '../../../models/responseCheckoutInten
     Divider,
     NgForOf,
     Tag,
-    Tooltip
+    CheckboxModule,
+    Tooltip,
+    FormsModule
   ],
   standalone: true,
   templateUrl: './payment-layout.component.html',
@@ -56,6 +59,8 @@ export class PaymentLayoutComponent implements OnInit, OnDestroy {
   _basketSelected: AdherentBasketModel | null = null;
   _baskets: AdherentBasketModel[] = [];
   _basketAmountTotal: number = 0;
+
+  _is3InstalmentsPayment =false;
 
   private _subscription: Subscription = new Subscription();
   private _getAdhesionDetails$: Subject<number> = new Subject();
@@ -152,7 +157,7 @@ export class PaymentLayoutComponent implements OnInit, OnDestroy {
     this._subscription.add(
       this._proceedPayment$.pipe(
         switchMap(idAdhesion => {
-          return this.getCheckoutIntentService.getCheckoutIntent(idAdhesion, this._token);
+          return this.getCheckoutIntentService.getCheckoutIntent(idAdhesion, this._is3InstalmentsPayment, this._token);
         }),
         tap(data => {
           this._spinner = false;

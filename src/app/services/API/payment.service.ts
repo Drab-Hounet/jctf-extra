@@ -33,10 +33,10 @@ export class PaymentService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getCheckoutIntent(authorization: string, idAdhesion: number, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiCheckoutIntentModel>;
-  public getCheckoutIntent(authorization: string, idAdhesion: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiCheckoutIntentModel>>;
-  public getCheckoutIntent(authorization: string, idAdhesion: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiCheckoutIntentModel>>;
-  public getCheckoutIntent(authorization: string, idAdhesion: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+  public getCheckoutIntent(authorization: string, idAdhesion: number, is3InstalmentsPayment: boolean, observe?: 'body', reportProgress?: boolean): Observable<ResponseApiCheckoutIntentModel>;
+  public getCheckoutIntent(authorization: string, idAdhesion: number, is3InstalmentsPayment: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ResponseApiCheckoutIntentModel>>;
+  public getCheckoutIntent(authorization: string, idAdhesion: number, is3InstalmentsPayment: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ResponseApiCheckoutIntentModel>>;
+  public getCheckoutIntent(authorization: string, idAdhesion: number, is3InstalmentsPayment: boolean, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
     if (authorization === null || authorization === undefined) {
       throw new Error('Required parameter authorization was null or undefined when calling getAdherents.');
@@ -60,7 +60,7 @@ export class PaymentService {
       headers = headers.set('Accept', httpHeaderAcceptSelected);
     }
 
-    return this.httpClient.request<ResponseApiCheckoutIntentModel>('post', `${this.basePath}/api/ext/payment/${encodeURIComponent(String(idAdhesion))}`,
+    return this.httpClient.request<ResponseApiCheckoutIntentModel>('post', `${this.basePath}/api/ext/payment/${encodeURIComponent(String(idAdhesion))}/${encodeURIComponent(String(is3InstalmentsPayment))}`,
       {
         withCredentials: this.configuration.withCredentials,
         headers: headers,

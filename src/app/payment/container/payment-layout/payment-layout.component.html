@@ -144,7 +144,10 @@
 
         <p-divider class="mt-5 mb-2"></p-divider>
       </div>
-
+      <div class="col-4 col-offset-4">
+        <p-checkbox [(ngModel)]="_is3InstalmentsPayment" inputId="instalments" [binary]="true" />
+        <label for="instalments" class="ml-2"> Paiement en 3 fois ? </label>
+      </div>
       <div class="col-6 col-offset-4 mt-3">
         <app-button-hello-asso (oPayAction)="onPayAction($event)"></app-button-hello-asso>
       </div>
