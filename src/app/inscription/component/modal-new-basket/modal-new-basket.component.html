@@ -1,6 +1,6 @@
 <p-dialog
   [(visible)]="_visible"
-  [style]="{ width: '90vw', height: '60vh' }"
+  [style]="{ width: '90vw', height: '70vh' }"
   [maximizable]="true"
   (onHide)="onCloseModal()"
   [closeOnEscape]="false"
@@ -11,7 +11,8 @@
   </ng-template>
 
   <div *ngIf="_isEmptyAdherents;else isNotEmpty">
-    <i class="text-blue-900 text-sm">Aucun adhérent présent. Veuillez créer un adhérent avant de l'ajouter sur la nouvelle saison.</i>
+    <i class="text-blue-900 text-sm">Aucun adhérent présent. Veuillez créer un adhérent avant de l'ajouter sur la
+      nouvelle saison.</i>
   </div>
 
   <ng-template #isNotEmpty>
@@ -23,54 +24,37 @@
           formControlName="adherent"
           styleClass="w-full text-xs border-blue-400 focus:border-blue-600"
           [options]="_adherentsSelect"
+          (onChange)="onSelectAdherent()"
           optionLabel="name"
         ></p-select>
       </div>
 
-      <div class="mt-8">
-        <legend>Activité :</legend>
-        <div class="flex justify-content-center flex-wrap">
-          <div
-            [ngClass]="{
-          'border-white': !_isJudoSelected,
-          'border-blue-900': _isJudoSelected
-          }"
-            class="flex align-items-center justify-content-center cursor-pointer bg-blue-50 border-1 font-bold m-2 border-round
-          hover:bg-blue-100"
-            style="min-width: 150px; min-height: 100px"
-            (click)="onSelectActivity('Judo')">
-            JUDO
-          </div>
-          <div
-            [ngClass]="{
-          'border-white': !_isJujitsuSelected,
-          'border-orange-900': _isJudoSelected
-          }"
-            class="flex align-items-center justify-content-center bg-orange-50 font-bold m-2 border-round border-1 cursor-pointer
-        hover:bg-orange-100"
-            style="min-width: 150px; min-height: 100px"
-            (click)="onSelectActivity('Jujitsu')">JUJITSU
-          </div>
-          <div
-            [ngClass]="{
-          'border-white': !_isTaisoSelected,
-          'border-red-900': _isJudoSelected
-          }"
-            class="flex align-items-center justify-content-center bg-red-50 font-bold m-2 border-round border-1 cursor-pointer
-        hover:bg-red-100"
-            style="min-width: 150px; min-height: 100px"
-            (click)="onSelectActivity('Taiso')">TAISO
-          </div>
-          <div
-            [ngClass]="{
-          'border-white': !_isJJBSelected,
-          'border-600': _isJudoSelected
-          }"
-            class="flex align-items-center justify-content-center surface-200 font-bold m-2 border-round border-1 cursor-pointer
-        hover:surface-300	"
-            style="min-width: 150px; min-height: 100px"
-            (click)="onSelectActivity('JJB')">JJB
-          </div>
+      <div class="mt-3">
+        <legend>Sélection des activités :</legend>
+        <div class="grid">
+          <ng-container *ngFor="let activity of _activities">
+            <div class="col-6">
+              <div
+                [ngClass]="{
+                'border-white': !activity.isSelected,
+                '{{activity.borderColor}}': activity.isSelected,
+                'cursor-pointer {{activity.hoverBackgroundColor}}':activity.nbPlaces > 0,
+                }"
+                class="select-none {{activity.backgroundColor}} h-8rem border-1 m-2 border-round "
+                (click)="onSelectActivity(activity)">
+                <div class="grid">
+                  <div class="font-bold col-12">
+                    {{ activity.name }}
+                  </div>
+                  <div class="text-sm font-italic col-12">
+                    Nombre de places disponibles : {{ activity.nbPlaces }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </ng-container>
+
         </div>
       </div>
       <div *ngIf=_isError class="mt-3">
@@ -81,9 +65,9 @@
 
   <ng-template pTemplate="footer">
     <p-button disabled="{{_isEmptyAdherents}}"
-      class="mr-5"
-      styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:bg-blue-50"
-      (click)="onSubmit()">
+              class="mr-5"
+              styleClass="border-transparent mt-2 w-full bg-white border-blue-900 border-round hover:bg-blue-50"
+              (click)="onSubmit()">
       <span class="text-xs text-blue-900 font-bold">Ajouter</span>
     </p-button>
     <p-button

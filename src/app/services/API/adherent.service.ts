@@ -1,9 +1,8 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {
-  HttpClient, HttpHeaders, HttpParams,
+  HttpClient, HttpHeaders,
   HttpResponse, HttpEvent
 } from '@angular/common/http';
-import {CustomHttpUrlEncodingCodec} from '../encoder';
 
 import {Observable} from 'rxjs';
 

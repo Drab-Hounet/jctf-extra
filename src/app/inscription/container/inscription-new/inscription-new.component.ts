@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HeaderComponent} from '../../../shared/component/header/header.component';
 import {TokenUtilityClass} from '../../../shared/Utils/tokenUtilityClass';
 import {ActivatedRoute, Router} from '@angular/router';
-import {filter, Subject, Subscription, switchMap, tap} from 'rxjs';
+import {filter, forkJoin, Subject, Subscription, switchMap, tap} from 'rxjs';
 import {StateApiModel} from '../../../models/stateApiModel';
 import {MessageService} from 'primeng/api';
 import {SpinnerComponent} from '../../../shared/component/spinner/spinner.component';
@@ -18,7 +18,6 @@ import {ModalBasketComponent} from '../../component/modal-basket/modal-basket.co
 import {CategoryClass} from '../../../shared/Utils/categoryClass';
 import {CreateBasketService} from '../../../services/basket/create-basket.service';
 import {ModalNewBasketComponent} from '../../component/modal-new-basket/modal-new-basket.component';
-import {GetAdherentsService} from '../../../services/adherent/get-adherents.service';
 import {AdherentModel} from '../../../models/adherentModel';
 import {ResponseAdherentApiModel} from '../../../models/responseApiAdherentModel';
 import {DeleteBasketService} from '../../../services/basket/delete-basket.service';
@@ -28,6 +27,9 @@ import {
   ModalCreateAdherentComponent
 } from '../../../shared/component/modal-create-adherent/modal-create-adherent.component';
 import {CreateAdherentService} from '../../../services/adherent/create-adherent.service';
+import {GetActivityDetailsService} from '../../../services/activity/get-activity-details.service';
+import {GroupActivityModel} from '../../../models/groupActivityModel';
+import {ModalNewBasketModel} from '../../../models/modalNewBasketModel';
 
 @Component({
   selector: 'app-inscription-new',
@@ -59,6 +61,9 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   _basketAmountTotal: number = 0;
   _isOpenModal = false;
   _isOpenCreateAdherentModal = false;
+  _listGroupActivity: GroupActivityModel[] = [];
+
+  _modalNewBasket: ModalNewBasketModel | null = null;
 
   private _subscription: Subscription = new Subscription();
   private _getAdhesionDetails$: Subject<number> = new Subject();
@@ -68,6 +73,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
   private _deleteBasket$: Subject<number> = new Subject();
   private _deleteAllBaskets$: Subject<boolean> = new Subject();
   private _createAdherent$: Subject<AdherentModel> = new Subject();
+  private _getActivityDetails$: Subject<boolean> = new Subject();
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -78,6 +84,7 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
               private deleteBasketService: DeleteBasketService,
               private deleteAllBasketsService: DeleteAllBasketsService,
               private createAdherentService: CreateAdherentService,
+              private getActivityDetailsService: GetActivityDetailsService,
               private messageService: MessageService) {
   }
 
@@ -162,16 +169,48 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
     this._subscription.add(
       this._getAdherents$.pipe(
         switchMap(_ => {
-          return this.getAdherentsFreeService.getAdherentsFree(this._adhesion!.id, this._token);
+          const adherents$ = this.getAdherentsFreeService.getAdherentsFree(this._adhesion!.id, this._token);
+          const activities$ = this.getActivityDetailsService.getActivityDetails(this._token);
+          return forkJoin({adherents: adherents$, activities: activities$});
         }),
-        tap(data => {
+        tap(({adherents, activities}) => {
           this._spinner = false;
-          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response) {
-            this.fillAdherent(data);
-          } else if (data && data.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
+          if (adherents && adherents.stateApi?.status === StateApiModel.StatusEnum.Success && adherents.response) {
+            this.fillAdherent(adherents);
+          } else if (adherents && adherents.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
             this.displayMessage('Identification erronée', 'Erreur', 'error');
             this.tokenUtilityClass.redirectToLogin().then(_ => {
             });
+          } else {
+            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+          }
+
+          if (activities && activities.stateApi?.status === StateApiModel.StatusEnum.Success && activities.response) {
+            this._listGroupActivity = activities.response;
+            this._modalNewBasket = {
+              listAdherent: this._adherentsUser ?? [],
+              listGroupActivity: this._listGroupActivity,
+            }
+          } else if (activities && activities.stateApi?.status === StateApiModel.StatusEnum.SessionError) {
+            this.displayMessage('Identification erronée', 'Erreur', 'error');
+            this.tokenUtilityClass.redirectToLogin().then(_ => {
+            });
+          } else {
+            this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
+          }
+        })).subscribe());
+
+
+    // get activity details
+    this._subscription.add(
+      this._getActivityDetails$.pipe(
+        switchMap(id => {
+          return this.getActivityDetailsService.getActivityDetails(this._token);
+        }),
+        tap(data => {
+          if (data && data.stateApi?.status === StateApiModel.StatusEnum.Success && data.response && data.response.length > 0) {
+            this._listGroupActivity = data.response;
+            console.log(data.response);
           } else {
             this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
           }
@@ -233,6 +272,8 @@ export class InscriptionNewComponent implements OnInit, OnDestroy {
             this.displayMessage('Une erreur est survenue', 'Erreur', 'error');
           }
         })).subscribe());
+
+
   }
 
   private fillAdherent(data: ResponseAdherentApiModel) {

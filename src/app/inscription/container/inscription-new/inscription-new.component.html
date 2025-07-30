@@ -76,7 +76,7 @@
 
 <app-modal-create-adherent [iOpenModal]="_isOpenCreateAdherentModal"
                            (oNewAdherent)="onNewAdherent($event)"></app-modal-create-adherent>
-<app-modal-new-basket [iAdherents]="_adherentsUser"
+<app-modal-new-basket [iModalNewBasket]="_modalNewBasket"
                       (oNewAdherentBasket)="onNewAdherentBasket($event)"></app-modal-new-basket>
 <app-modal-basket *ngIf="_baskets" [iBaskets]=_baskets [iOpenModal]="_isOpenModal"
                   (oDeleteBasket)="onDeleteBasket($event)"
