@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 
 import {BASE_PATH, COLLECTION_FORMATS} from '../variables';
 import {Configuration} from '../configuration';
-import {environment} from '../../../environmnent/environment';
+import {environment} from '../../../environments/environment';
 import {AdherentModel} from '../../models/adherentModel';
 import {ResponseAdherentApiModel} from '../../models/responseApiAdherentModel';
 

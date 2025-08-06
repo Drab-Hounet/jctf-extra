@@ -1,7 +1,7 @@
 import {Inject, Injectable, Optional} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {environment} from '../../../environmnent/environment';
+import {environment} from '../../../environments/environment';
 import {Configuration} from '../configuration';
 import {BASE_PATH} from '../variables';
 import {ResponseUserApiModel} from '../../models/responseApiUserModel';

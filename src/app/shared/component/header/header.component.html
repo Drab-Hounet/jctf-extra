@@ -1,6 +1,6 @@
 <div class="w-full bg-blue-50 border-900 shadow-1	 ">
   <div class="grid">
-    <div class="col-2">
+    <div class="col-3">
       <ng-container *ngIf="_isInscriptionSelected;else profilNotSelected">
       <p-button
         styleClass="w-full bg-white border-900 text-color text-sm
@@ -18,7 +18,7 @@
         ></p-button>
       </ng-template>
     </div>
-    <div class="col-2">
+    <div class="col-3">
       <ng-container *ngIf="_isInscriptionSelected;else inscriptionNotSelected">
         <p-button
           styleClass="w-full bg-blue-900 border-900 text-white text-sm
@@ -36,7 +36,7 @@
         ></p-button>
       </ng-template>
     </div>
-    <div class="col-2 col-offset-6">
+    <div class="col-3 col-offset-3">
       <p-button
         pTooltip="Déconnexion" tooltipPosition="bottom"
         icon="pi pi-fw pi-power-off"
